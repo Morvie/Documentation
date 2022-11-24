@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a>
-    <img src="./img/logo.png" alt="Logo" width="250" height="250">
+    <img src="img\logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center">Technical Documentation</h3>
@@ -116,14 +116,10 @@ The system from figure 1: <strong>“[Level 1: System context]”</strong> is sp
 
 **Web application.**
 
- ```JavaScript 
-This is the container where the actors can interact with the system. This is visual part of the application and communicates with the back-end component. 
-```
+ ```This is the container where the actors can interact with the system. This is visual part of the application and communicates with the back-end component. ```
 
 **API Gateway.**
 
 
-```JavaScript
-    This component of the application separates the front-end with the back-end components. The API-gateways has all endpoints of the back-end components and communicates with the front-end which it wants to use. But for security reasons the front-end does not know which components and endpoints there are in the back-end. This proves also to be good for scalability. 
-```
+```This component of the application separates the front-end with the back-end components. The API-gateways has all endpoints of the back-end components and communicates with the front-end which it wants to use. But for security reasons the front-end does not know which components and endpoints there are in the back-end. This proves also to be good for scalability.```
 
