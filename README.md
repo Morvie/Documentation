@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a>
-    <img src="./img/logo.png" alt="Logo" width="250" height="250">
+    <img src="./logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center">Documentation</h3>

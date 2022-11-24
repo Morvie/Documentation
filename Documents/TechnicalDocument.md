@@ -66,6 +66,7 @@ For this application the backend programming language would be generally written
   <img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/csharp/csharp-original.svg" title="Csharp" alt="Csharp" width="100" height="100"/>&nbsp;
   <img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/dotnetcore/dotnetcore-original.svg" title="dotnet" alt="dotnet" width="100" height="100"/>&nbsp;
 </div>
+
 <br/>
 
 <h4><strong>Front-end</strong></h4>
@@ -105,6 +106,9 @@ The user roles within this application are viewed as followed:
 With two external systems attached to this system, it would help beneficial to improve content to this application. With usage of The Movie Database (TMDB), I can get content to the application about films and series. 
 
 And with help of Auth0, users can log in and use several external services to log in within this application and use it.
+
+<img src="./img/Level1[System-context].png" title="Level 1" alt="Level 1" width="400" height="300" align="centre"/>&nbsp;
+
 <br/>
 
 <h4><strong>Level 2: [Container overview]</strong></h4>
@@ -122,4 +126,6 @@ The system from figure 1: <strong>“[Level 1: System context]”</strong> is sp
 
 
 ```This component of the application separates the front-end with the back-end components. The API-gateways has all endpoints of the back-end components and communicates with the front-end which it wants to use. But for security reasons the front-end does not know which components and endpoints there are in the back-end. This proves also to be good for scalability.```
+
+<img src="./img/Level2[Container diagram]" title="Level 2" alt="Level 2" width="400" height="300" align="centre"/>&nbsp;
 
