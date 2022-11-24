@@ -107,7 +107,9 @@ With two external systems attached to this system, it would help beneficial to i
 
 And with help of Auth0, users can log in and use several external services to log in within this application and use it.
 
-<img src="./img/Level1[System-context].png" title="Level 1" alt="Level 1" width="400" height="300" align="centre"/>&nbsp;
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/Level1%5BSystem-context%5D.png" title="Level 2" alt="Level 2" width="400" height="300"/>&nbsp;
+</div>
 
 <br/>
 
@@ -120,12 +122,23 @@ The system from figure 1: <strong>“[Level 1: System context]”</strong> is sp
 
 **Web application.**
 
- ```This is the container where the actors can interact with the system. This is visual part of the application and communicates with the back-end component. ```
+This is the container where the actors can interact with the system. This is visual part of the application and communicates with the back-end component. 
+
+<br/>
 
 **API Gateway.**
 
+This component of the application separates the front-end with the back-end components. The API-gateways has all endpoints of the back-end components and communicates with the front-end which it wants to use. But for security reasons the front-end does not know which components and endpoints there are in the back-end. This proves also to be good for scalability.
 
-```This component of the application separates the front-end with the back-end components. The API-gateways has all endpoints of the back-end components and communicates with the front-end which it wants to use. But for security reasons the front-end does not know which components and endpoints there are in the back-end. This proves also to be good for scalability.```
+<br/>
 
-<img src="./img/Level2[Container diagram]" title="Level 2" alt="Level 2" width="400" height="300" align="centre"/>&nbsp;
+**Keycloak.**
 
+This service communicates two ways, front-end and back-end wise. The way this service works is that the front-end requests to validate the given user credentials. The service validates the given user credentials and give back an access token through JWT-tokens. And let the frond-end communicate directly to the gateway.
+
+
+Once at the gateway, the gateway service receives the JWT token and retrieves the access token out of it through a special decoding encryption. And communicates with the keycloak service to validate the access token. Once its is validated successfully, the response becomes a token that is usable and gets access to the authentication schemes. Which also comes with authrozation limitations. This way of communication is called: *OAuth2.0*
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/Level2%5BContainer%20diagram%5D.png" title="Level 2" alt="Level 2" width="450" height=""/>&nbsp;
+</div>
