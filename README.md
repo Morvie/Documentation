@@ -32,7 +32,7 @@ My name is Mark Goertz, and I am a student at Fontys HBO-ICT bachelor education 
 
 Before this current semester, I performed a software internship at the company called: IPTV and solutions company called: ‘Stream-group’. During this time, I gained a lot of software skills and learned to be more professional within the work environment. But also, trouble shooting and finding the best possible solution for the client. And do I have gained a little bit of information about enterprise software; like the concepts and how does non-functional user requirements matter more within these software products.
 
-For this semester, I am willing to learn new programming languages but also already experienced languages. So, that I can develop myself in my skills. The languages I would likely be learning from scratch this semester would be C# with .NET6 and JavaScript with React.js. 
+For this semester, I am willing to learn new programming languages but also already experienced languages. So, that I can develop myself in my skills. The languages I would likely be learning from scratch this semester would be <a><strong>C#</strong> with <strong>.NET6 and JavaScript with React.js.</strong></a> 
 
 My goal would be to pass this semester and go to the next semester with more professionalism and technical knowledge. 
 
