@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a>
-    <img src="./logo.png" alt="Logo" width="250" height="250">
+    <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center">Documentation</h3>
