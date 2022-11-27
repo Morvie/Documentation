@@ -89,7 +89,7 @@ My choice to learn something new among the front-end frameworks is due to two re
 ---
 
 # :calling: C4-model
-<h4><strong>Level 1:[System overview]</strong></h4>
+## Level 1:[System overview]
 
 In the design, I choose to make use of the C4-model to design the application structure. With help of the C4-model, I can clarify every system, container, component and as final the classes within the C4-model in detail. In this subject, all levels of the C4-model will be explained.
 	
@@ -113,7 +113,7 @@ And with help of Auth0, users can log in and use several external services to lo
 
 <br/>
 
-<h4><strong>Level 2: [Container overview]</strong></h4>
+## Level 2: [Container overview]
 
 Within the Morvie application the following the system is getting split in multiple containers that support as one system. Below there will be explained what containers this system contains:
 
