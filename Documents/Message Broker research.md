@@ -59,10 +59,10 @@ It is one of them most popular open-source message brokers currently available. 
 
 <table align = center>
     <th>
-        <a href = "https://reddit.com/"><img src="../img/Messagebroker/Aspose.Words.9a0700a1-7fa9-49b9-92af-bc35d0af2ecc.003.png" alt= "reddit"></a>
+        <a href = "https://reddit.com/"><img src="../img\MessageBroker/Aspose.Words.9a0700a1-7fa9-49b9-92af-bc35d0af2ecc.003.png" alt= "reddit"></a>
     </th>
     <th>
-        <a href = "https://trivago.com/"><img src="../img/Messagebroker/Aspose.Words.9a0700a1-7fa9-49b9-92af-bc35d0af2ecc.004.png" alt= "Trivago"></a>
+        <a href = "https://trivago.com/"><img src="../img/MessageBroker/Aspose.Words.9a0700a1-7fa9-49b9-92af-bc35d0af2ecc.004.png" alt= "Trivago"></a>
     </th>
     <th>
         <a href = "https://circleci.com/"><img src="../img/MessageBroker/Aspose.Words.9a0700a1-7fa9-49b9-92af-bc35d0af2ecc.005.png" alt= "CircleCI"></a>
@@ -165,6 +165,16 @@ Kafka can be either downloaded or pulled as a Docker image. And has the option t
 There is no fancy framework available for Apache Kafka since Kafka provides enough support. However there are some packages that is needed for installation with `NuGet`, `NPM` or whatever the developer needs. Asuming it is .NET, it would be `NuGet`. And since Apache Kafka is widly used, there are many tutorials available to integrate Apache Kafka into the project. The Kafka message broker needs to be installed by either running a `docker` container or installing a .exe file that will allow me to run it locally.
 
 <a href="https://www.red-gate.com/simple-talk/development/dotnet-development/using-apache-kafka-with-net/">Tutorial for building Apache Kafka with .NET6</a>
+
+&nbsp;
+
+## Alternatives for message brokers:
+
+These message brokers were considered but did not get further research due to lack of time:
+
+- Memphis 
+- WSO2
+- Amazon MQ
 
 &nbsp;
 ### Sources:
