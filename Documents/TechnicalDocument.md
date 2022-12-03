@@ -56,7 +56,12 @@ The reader will receive a generic overview over the made components. Furthermore
 
 # :hammer_and_wrench: Programming languages and tools :
 
-<h4><strong>Back-end</strong></h4>
+
+&nbsp;
+&nbsp;
+
+
+## Back-end
 
 For this enterprise software application, the choice for a programming language must be made. Because this application is required to have a scalable architecture within the backend, the backend programming language does not matter that much, since we the programmer can choose it preferred the implementing programming language for the targeted microservice.
 
@@ -69,7 +74,7 @@ For this application the backend programming language would be generally written
 
 <br/>
 
-<h4><strong>Front-end</strong></h4>
+## Front-end
 For the front-end application where the actor of this application can experience the application the programming language will be: React.js.
 Personally, I don’t have any experience with React.js and do I rely on my knowledge about a similar front-end JavaScript framework: Vue.js. And am I able to use React.js with the superset of JavaScript: TypeScript, which I also use in the backend. So, I am expecting to not experience a very steep learning curve within the development phase.
 
@@ -82,9 +87,25 @@ My choice to learn something new among the front-end frameworks is due to two re
 </div>
 </br>
 
-<h4><strong>Databases</strong></h4>
+## Databases
+
+For the databases in this project, I am considering to use **Microsoft SQL Server** and/or **MySQL databases** over NoSQL databases. This is due to the fact that these databases are these databases are possible to vertical scaling. So, adding more RAM and CPU to scale up. As mentioned in my research about SQL and NoSQL databases in <a href = "https://github.com/Morvie/Documentation/blob/main/Documents/Code%20pattern.md"> research SQL and NoSQL</a>  about the advantages of both of these.
 
 
+<div align=center>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/microsoftsqlserver/microsoftsqlserver-plain-wordmark.svg" title="Csharp" alt="Csharp" width="100" height="100"/>&nbsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/mysql/mysql-plain.svg" title="dotnet" alt="dotnet" width="100" height="100"/>&nbsp;
+</div>
+
+&nbsp;
+&nbsp;
+
+For the security over the database connectivity layer, the usage of an `Object Relation Mapping provider` or known as an `ORM` has been used. I used the framework `Entity Framework` for mapping SQL-queries to the database, since it comes with a in-build security over: 
+
+- Tradional SQL injection (As long as there are no raw query input).
+- Protect data store connection information.
+- Logs all performed queries and performers.
+- Offers the option to encrypt column encryption to e.g. connection strings.
 
 ---
 
@@ -98,9 +119,9 @@ Within level one in the C4-model, the software program, external software system
 
 The user roles within this application are viewed as followed:
 
-- ```User (Could be a psychologist/expert or visually) ```
+- User (A regular user of the application)
 
-- ```Administrator (Additional rights and functionalities within the application) ```
+- Administrator (Additional rights and functionalities within the application)
 
 
 With two external systems attached to this system, it would help beneficial to improve content to this application. With usage of The Movie Database (TMDB), I can get content to the application about films and series. 
