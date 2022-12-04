@@ -38,13 +38,75 @@ And will I use a public cloud over the private and hybrid cloud options. This is
 
 ***GDPR Sensitive!*** 
 
-So, I do not have more control over my data and can not oversee my third-party usage over the cloud-services! Which can harm the GDPR rules over personal data that could be stored within the future in this application.
+So, since I do not use a private hosting option. I do have to keep in mind, I can not control the physical server and have to rely on the provider. So, the  third-party could abuse usage over the cloud-services and get user sesitive data! Which can harm the GDPR rules over personal data that could be stored within the future in this application.
 
 &nbsp;
 &nbsp;
 
 ## What are the needs for this project with Cloud-hosting?
 
+### Google cloud
+
+<table align = center>
+  <tr>
+    <th width="200">
+    </th>
+    <th width="600">
+      Explaination of usage
+    </th>
+    <th width="600">
+      Average Costs €
+    </th>
+  </tr>
+  <tr>
+    <td>
+      Autoscaling
+    </td>
+    <td>
+      Maximizes the application reposiveness by scaling up the cluster automatically when needed.
+      It is a Infrastructure feature that can either horizontally or vertically scale up the cluster.
+    </td> 
+    <td>
+      No given costs, since it charges the company or user the cost it is using. So, if suddenly the website gets one hundred thousand requests. It scales automatically up.
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Cloud Databases 
+    </td>
+    <td>
+      <p>The cloud database comes with encryption over data that gets stored in the cloud database. And is over  <code>SSAE 16, ISO 27001</code> and <code>PCI DSS  complaint.</code>
+      It provides a 99,95% availability of access and functionality anywhere in the world. 
+      And can also automatically replicate itself to reduce the number of overloading.    
+      </p>
+    </td>
+    <td>
+      €10.95 euros a month
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Registry and hosting
+    </td>
+    <td>
+      Needed for hosting and deploying the Kubernetes cluster to the cloud environment. 
+    </td>
+    <td>
+      €53.44 for hosting the environment with using kubernetes. Where the access to <code>1vCPU</code> and <code>3,75 GB of RAM memory</code> is given.
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Self-signed certificate
+    </td>
+    <td>
+      Needed to make everything secure by having <code>HTTPS</code>. So that the connection between services and gateways have a encrypted connection.
+    </td>
+      <td>
+        € free of costs.
+    </td>
+  </tr>
+</table>
 
 
 
@@ -138,8 +200,29 @@ So, I do not have more control over my data and can not oversee my third-party u
   </tr>
 </table>
 
+&nbsp;
+&nbsp;
+
+## Popularity chard by StackOverflow
+
 <div align = center>
   <img src="../img/StackOverFlow trend.svg" width="600"></a>
+</div>
+
+&nbsp;
+&nbsp;
+
+## Azure hosting and deployment
+
+So I have chosen to host my application in Azure. The reason for this is due to the fact that Azure provides good documentation and support with .NET applications. This is beneficial because the microservices are primarily built with .NET framework.
+
+So I have started out with creating a registry on the Azure environment and made a cluster for the needed services. 
+
+&nbsp;
+&nbsp;
+
+<div align = center>
+  <img src="../img/Cloud/Azure registry.png"></a>
 </div>
 
 &nbsp;
@@ -153,3 +236,16 @@ So, I do not have more control over my data and can not oversee my third-party u
 * (2022, December 3). StackOverflow. https://insights.stackoverflow.com/trends?tags=azure%2Camazon-web-services%2Cgoogle-cloud-platform%2Cdigital-ocean&_ga=2.65165606.945540501.1670098375-1087063840.1670098375
 
 * What is cloud hosting. (n.d.). IBM. https://www.ibm.com/cloud/learn/what-is-cloud-hosting
+
+* Hui, J. (2021, March 25). Azure Autoscaling: A Practical Guide. Spot by NetApp. https://spot.io/resources/azure-pricing/azure-autoscaling-a-practical-guide/
+
+* AWS Educate. (n.d.). Amazon Web Services, Inc. https://aws.amazon.com/education/awseducate/
+
+* Google Cloud. (n.d.). Cloud Computing Services  |. https://cloud.google.com/
+
+* Cloud SQL for PostgreSQL, MySQL, and SQL Server  |  Cloud SQL: Relational Database Service  |. (n.d.). Google Cloud. https://cloud.google.com/sql/?utm_source=google
+
+* Pricing Calculator. (n.d.). Microsoft Azure. https://azure.microsoft.com/en-us/pricing/calculator/?
+
+* AWS Pricing Calculator. (n.d.). https://calculator.aws/
+
