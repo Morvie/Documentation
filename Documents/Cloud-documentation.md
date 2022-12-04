@@ -108,7 +108,69 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
   </tr>
 </table>
 
+&nbsp;
+&nbsp;
 
+### Azure cloud
+
+<table align = center>
+  <tr>
+    <th width="200">
+    </th>
+    <th width="600">
+      Explaination of usage
+    </th>
+    <th width="600">
+      Average Costs €
+    </th>
+  </tr>
+  <tr>
+    <td>
+      Autoscaling
+    </td>
+    <td>
+      Maximizes the application reposiveness by scaling up the cluster automatically when needed.
+      It is a Infrastructure feature that can either horizontally or vertically scale up the cluster.
+    </td> 
+    <td>
+      No given costs, since it charges the company or user the cost it is using. So, if suddenly the website gets one hundred thousand requests. It scales automatically up.
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Cloud Databases 
+    </td>
+    <td>
+      In Azure, all newly created databases are encrypted by default and the database encryption key is protected by a built-in server certificate. Also access protection can be setup to even more limit the numbers of people that can have access to the database. 
+      </p>
+    </td>
+    <td>
+      €12,- euros a month
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Registry and hosting
+    </td>
+    <td>
+      Needed for hosting and deploying the Kubernetes cluster to the cloud environment. 
+    </td>
+    <td>
+      €0,097 per cluster per hour
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      Self-signed certificate
+    </td>
+    <td>
+      Needed to make everything secure by having <code>HTTPS</code>. So that the connection between services and gateways have a encrypted connection.
+    </td>
+      <td>
+        € free of costs.
+    </td>
+  </tr>
+</table>
 
 &nbsp;
 &nbsp;
