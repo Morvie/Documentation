@@ -126,18 +126,6 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
   </tr>
   <tr>
     <td>
-      Autoscaling
-    </td>
-    <td>
-      Maximizes the application reposiveness by scaling up the cluster automatically when needed.
-      It is a Infrastructure feature that can either horizontally or vertically scale up the cluster.
-    </td> 
-    <td>
-      No given costs, since it charges the company or user the cost it is using. So, if suddenly the website gets one hundred thousand requests. It scales automatically up.
-    </td> 
-  </tr>
-  <tr>
-    <td>
       Cloud Databases 
     </td>
     <td>
@@ -156,7 +144,7 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
       Needed for hosting and deploying the Kubernetes cluster to the cloud environment. 
     </td>
     <td>
-      €0,097 per cluster per hour
+      €0,097 per cluster per hour for hosting in Germany North.
     </td> 
   </tr>
   <tr>
