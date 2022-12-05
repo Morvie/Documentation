@@ -1,20 +1,43 @@
 
 ---
 
-# GDPR documentation
+<a name="readme-top"></a>
 
-Everything about the GDPR is described within this document.
+<!-- PROJECT LOGO -->
+
+
+<div align="center">
+  <a>
+    <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/logo.png" alt="Logo" width="250" height="250">
+  </a>
+
+  <h1 align="center">GDPR documentation</h1>
+  <h3 align="center">Morvie Documentation</h3>
+
+  <p align="center">
+    <br />
+    <a href="https://github.com/orgs/Morvie/repositories"><strong>View repositories»</strong></a>
+    <br />
+    <br />
+    <a href="">View Demo</a>
+    ·
+    <a href="https://github.com/Morvie/Documentation/issues">Report Bug</a>
+  </p>
+</div>
 
 ---
 
+&nbsp;
+&nbsp;
 
 
-### Lawful basis and transparency
+## 1 - Lawful basis and transparency
 
 * Art. 6 GDPR: Lawfulness of processing
 * Art. 12 GDPR: Transparent information,communication and modalities for the exercise of the rights of the data subject.
 * Art. 30 GDPR: Records of processing activities
 
+---
 
 Morvie as the application holds several data topics. These topics are personal data, movie data and user input data (such as user given reviews and ratings). So, this will explain what will be done with the personal data of our customers.
 
@@ -29,13 +52,112 @@ The authentication service and the morvie application share a `single connection
 </div>
 
 &nbsp;
+&nbsp;
 
-### Data processing and legal justifications.
+The personal data, storage location, usage of the data and duration of holding this data is important to be explained. Within the table below, this will bee explained. Thereby, I hope to inform the usage of the personal data within this application.
+
+<table align = center>
+  <tr>
+    <th width="200">
+        Personal data type
+    </th>
+    <th width="600">
+        Location of storage
+    </th>
+    <th width="600">
+        Usage of this data.
+    </th>
+    <th width="600">
+        Duration of holding this data
+    </th>
+  </tr>
+  <tr>
+    <td>
+       Email-address + username + password
+    </td>
+    <td>
+        Stored in a Keycloak authentication database server, which is stored locally on the developers laptop. With a single connection by keycloak and the database. It can still be deleted by keycloak.
+        The database is an <code>PostgreSQL database.</code>
+    </td> 
+    <td>
+        This data gets used to validate the user on registry and authentication and/or authorization operations. It is an identifier of the unique user.
+    </td> 
+    <td>
+        This data gets stored as long as the user is active. The initial plans for implementing GDPR friendly data-removal will be done when the user is no longer active and have not logged in  within the past 2 years. The user will receive multiple notifications by mail to log in otherwise the data will be removed and destroyed.
+    </td> 
+  </tr>
+  <tr>
+    <td>
+       User Identifier
+    </td>
+    <td>
+        Will be stored within the keycloak user database using <code>PostgreSQL database</code> and the Feed- and Forums-database using <code> MSQL database</code>
+    </td> 
+    <td>
+      This data will be used to make a connection between the user-made feed and/or forums. In order to let the application make a correlation between the owner of the feed/forum and the feed/forum itself.
+    </td> 
+    <td>
+      It remains as long as the user wants it feed/forum to be shown on the website. Unless it is inapropriate to display, it will be destroyed immediately with the user identifier. And the user is free for removal of the feed/forums.
+    </td> 
+  </tr>
+  
+
+</table>
+
+
+&nbsp;
+
+#### Data processing and legal justifications.
 
 Within the user registery form, there will be a `clear` and `big` text box in where the user is mandatory to read the usage and collection of user personal data over the email address and password. And will let the user continue after it fully red the usage over their information and collection. 
+
+&nbsp;
+&nbsp;
+
+## 2 - Data security
+
+
+---
+
+&nbsp;
+&nbsp;
+
+## 3 - Accountability and governance
+
+* GDPR Article 25 – Data protection by design and by default
+
+* GDPR Article 27 – Representatives of controllers or processors not established in the Union
+
+* GDPR Article 37 – Designation of the data protection officer
+---
+
+Within Morvie organization, there is no `Data Protection Officer` simply because the team is too small for this. And so does the development team need to take this in account. The developers are constantly monitoring the data protection and GDPR compliance. And act as a team of advisers and implement these advise.
+
+The company acts within the European Union and so, there needs no reponsible representative in each country to represent to the data protection authorities. And since this company is operative within the `European Union`, the rules validation of GDPR complaince `apply to all member states of the European Union`.
+
+With using a cloud provider which does the hosting and infrastructure of "Morvie", the contract of hosting the data service is signed by the purchase. Since the cloud provider `Azure` is of product name of  `Microsoft` and will be stored on a server in `North-Germany`. It is a risk of using a `public` hosting provider, but the costs currently does not allow to buy our own `private hosting domain`. 
+
+The current reponsible person over ensuring the GDPR compliance accros the organization is the `developer: Mark Goertz`. And will be reponsible for creating awareness to the new members of the organization and will the desicion makers be informed about the data protection legislation.
+
+&nbsp;
+&nbsp;
+
+## 4 - Privacy rights
+
+* GDPR Article 15 – Right of access by the data subject
+* GDPR Article 16 – Right to rectification
+---
+
+When the user what to access its personal information it can send a email to `Data Protection Officer`. Or fill in a GDPR form (which is currently not going to be implemented) and create a ticket to the Data protection officer. This person will prepare the personal information and send this to the person who requested the form.
+
+The person is currently not able to modify the personal information on its own. But this can be implemented in which the user will communicate directly to the backend service that processes this action. And the data will be `end-to-end encryption` so it becomes not readable.
+
+As well as the option to delete the personal information. This is currently been done by the DPO on request.
 
 # Sources:
 
 - GDPR.eu. (2022, May 26). GDPR compliance checklist. https://gdpr.eu/checklist/
 
 - Fontys (2021). Cyber Security https://fhict.instructure.com/courses/11556/pages/reference-law-standards-and-compliance?module_item_id=680345
+
+- Advisera.com (2022, April 13). Top 10 GDPR Requirements https://advisera.com/eugdpracademy/knowledgebase/a-summary-of-10-key-gdpr-requirements/
