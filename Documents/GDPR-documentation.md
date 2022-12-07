@@ -154,6 +154,47 @@ The person is currently not able to modify the personal information on its own. 
 
 As well as the option to delete the personal information. This is currently been done by the DPO on request.
 
+
+# Distributed data | CAP theorem
+&nbsp;
+
+The CAP theorem is a way to validate the distributed data systems. A distributed data system provider can be divided into three selections. 
+
+<div align = center>
+    <img src = "../img/CAP.png">
+</div>
+&nbsp;
+
+
+#### Information and given examples.
+The selection above describe the guarantees that you can promise to the users. But the promise can not be all three of them, but only 2. Explained what all guarantees are it will be explained below:
+
+- `Consistency`: All clients have the same view of the data. So, this means that the users all see the most recent write or otherwise receive an error. And means that the data, the latest write data, is also highly accurate. Since consistency aims to be consistend.
+
+- `Availability`: The guarantee promises users that the database service is more important than the information. These databases are widly seen in E-commerce businesses and applications. These databases replicate themselves when receiving a higher load than they can process.
+
+- `Partion Tolerance`: This guarantee gives the users the guarantee that the database system will work well despite the physical network partions. So, the database cluster will continue to work even when two seperate nodes can not communicate with each other.
+
+
+#### Choice within the project.
+Within the project, I have decided to choose the following databases:
+- `MSSQL database`: which runs on Docker.
+- `Azure(MySQL) database`: Which runs on Azure Cloud environment.
+
+With these chosen databases, I will explain which parts the database system will cover of the CPA theormen. Both of these databases will cover the CA parts of the CPA theorem, since it is only possible to cover two out of the three parts. With `Consistency` and `Availability` covered. The database system will write a high volume of data with a high accuracy. And will it load replicate itselves when the load gets too much. 
+
+With `MSSQL` database, the feature `always on` is enabled on the local development environment. And can automatically perform availability. 
+
+The `Azure|MySQL database` will be used on the cloud environment. Which will automatically scale up by Azure services when needed. This brings an addional server usage costs, but it only charges only what the company requires.
+
+
+
+
+&nbsp;
+&nbsp;
+
+
+
 # Sources:
 
 - GDPR.eu. (2022, May 26). GDPR compliance checklist. https://gdpr.eu/checklist/
@@ -161,3 +202,5 @@ As well as the option to delete the personal information. This is currently been
 - Fontys (2021). Cyber Security https://fhict.instructure.com/courses/11556/pages/reference-law-standards-and-compliance?module_item_id=680345
 
 - Advisera.com (2022, April 13). Top 10 GDPR Requirements https://advisera.com/eugdpracademy/knowledgebase/a-summary-of-10-key-gdpr-requirements/
+
+- What is the CIA Triad? Definition, Importance & Examples. (2022, 8 oktober). SecurityScorecard. https://securityscorecard.com/blog/what-is-the-cia-triad

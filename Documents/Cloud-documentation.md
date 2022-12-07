@@ -278,6 +278,12 @@ So I have started out with creating a registry on the Azure environment and made
 &nbsp;
 &nbsp;
 
+## Logging and monitoring
+
+With logging and monitoring of applications can simply be done by the sources the cloud provider provides. With the local development I used `minikube` which comes in with a logging over local `pods` and `deployments`.
+
+When using Azure, the cloud provider comes with a in-build monitoring tool that gives developers an insight in the `application health` over pods and deploys. And can deliver a log over the application' loggin messages.
+
 # Sources:
 * Fontys (n.d) Fontys.nl https://fhict.instructure.com/courses/12452/pages/cloud-services-theoretical-background?module_item_id=829969
 
