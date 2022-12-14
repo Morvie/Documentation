@@ -153,18 +153,16 @@ When the user what to access its personal information it can send a email to `Da
 The person is currently not able to modify the personal information on its own. But this can be implemented in which the user will communicate directly to the backend service that processes this action. And the data will be `end-to-end encryption` so it becomes not readable.
 
 As well as the option to delete the personal information. This is currently been done by the DPO on request.
+&nbsp;
+
 
 
 # Distributed data | CAP theorem
-&nbsp;
-
 The CAP theorem is a way to validate the distributed data systems. A distributed data system provider can be divided into three selections. 
 
 <div align = center>
     <img src = "../img/CAP.png">
 </div>
-&nbsp;
-
 
 #### Information and given examples.
 The selection above describe the guarantees that you can promise to the users. But the promise can not be all three of them, but only 2. Explained what all guarantees are it will be explained below:
@@ -187,13 +185,10 @@ With `MSSQL` database, the feature `always on` is enabled on the local developme
 
 The `Azure|MySQL database` will be used on the cloud environment. Which will automatically scale up by Azure services when needed. This brings an addional server usage costs, but it only charges only what the company requires.
 
+#### Use-case within project.
+My usage within this project would be a `Azure MySQL database`. Within this database it can automatically scale up when needed, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
 
-
-
-&nbsp;
-&nbsp;
-
-
+---
 
 # Sources:
 
@@ -204,3 +199,5 @@ The `Azure|MySQL database` will be used on the cloud environment. Which will aut
 - Advisera.com (2022, April 13). Top 10 GDPR Requirements https://advisera.com/eugdpracademy/knowledgebase/a-summary-of-10-key-gdpr-requirements/
 
 - What is the CIA Triad? Definition, Importance & Examples. (2022, 8 oktober). SecurityScorecard. https://securityscorecard.com/blog/what-is-the-cia-triad
+
+- Savjani, S. (2022, 29 november). Hoge beschikbaarheid - Azure Database for MySQL. Microsoft Learn. https://learn.microsoft.com/nl-nl/azure/mysql/single-server/concepts-high-availability

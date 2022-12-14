@@ -13,7 +13,8 @@
   # Cloud provider and services
 </div>
 
----
+&nbsp;
+&nbsp;
 
 ## What is the cloud?
 
@@ -100,7 +101,7 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
       Self-signed certificate
     </td>
     <td>
-      Needed to make everything secure by having <code>HTTPS</code>. So that the connection between services and gateways have a encrypted connection.
+      Needed to make everything secure by having <code>HTTPS</code>. So that the connection between services and gateways have a encrypted connection. 
     </td>
       <td>
         € free of costs.
@@ -155,7 +156,7 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
       Needed to make everything secure by having <code>HTTPS</code>. So that the connection between services and gateways have a encrypted connection.
     </td>
       <td>
-        € free of costs.
+        € free of costs. But is not a real SSL-certificate. The services can get the certificate but is charged extra.
     </td>
   </tr>
 </table>
@@ -262,7 +263,7 @@ So, since I do not use a private hosting option. I do have to keep in mind, I ca
 &nbsp;
 &nbsp;
 
-## Azure hosting and deployment
+# Azure hosting and deployment
 
 So I have chosen to host my application in Azure. The reason for this is due to the fact that Azure provides good documentation and support with .NET applications. This is beneficial because the microservices are primarily built with .NET framework.
 
@@ -278,11 +279,174 @@ So I have started out with creating a registry on the Azure environment and made
 &nbsp;
 &nbsp;
 
+## Creating Azure database.
+
+In order to create a database with Azure, I needed to add a SQL server in Azure. I choose the option to create `Azure MySQL` server. In order to make the database work with my application instead using other providers. This also has some benefits as mentioned in my <a href = "https://github.com/Morvie/Documentation/blob/main/Documents/GDPR-documentation.md">GDPR-document</a>, since it comes with available `Consistency` and `Availability` as database guarantees. 
+
+<div align = center>
+  <img src="../img/Cloud/Azure-database server.png"></a>
+</div>
+
+&nbsp;
+
+In order to make the database work, the need was needed to add new databases to the server. So, I did add `Azure databases` to the `Azure database server`. And so we need to add this to the resources as well.
+
+<div align = center>
+  <img src="../img/Cloud/Azure-options.png"></a>
+</div>
+
+&nbsp;
+
+<div align = center>
+  <img src="../img/Cloud/Azure-database-feed.png"></a>
+</div>
+
+And as well as firewall security settings, which needs to be added as well. 
+Otherwise, the applications that are connected to this database will not receive any data because of the firewall rules.
+
+&nbsp;
+
+
+## Creating a Kubernetes manifest file.
+
+I have created a manifest file in which contains all items that is needed to deploy a microservice to Azure. There are three things needed in order to deploy a microservice to the Azure cloud, which are: 
+- Deployment file.
+- Service file
+- Ingress file.
+
+All these files have their own purpose, in which I will explain shortly what their purpose is. And how these files contribute to the cloud-deployment. 
+
+#### Kubernetes | Deployment file
+
+``` yml
+# Deployment to the Kubernetes Cluster:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feeds-api
+  labels:
+    app: feeds-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feeds-api
+  template:
+    metadata:
+      labels:
+        app: feeds-api
+    spec:
+      containers:
+        - name: feeds-api
+          image: markgoertz/feedmessages:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 443
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+```
+
+The deployment file is basically a configurations file that contains a few configurations the developer can configure. This is needed since somewhere there has to be described what configurations it needs to use in order to properly function. 
+
+- **Replica's:** this describes the numbers of pods that can be created in order to maintain a stable set of pods at any given time. If a pod fails or is evicted, the cluster will automatically generate/create new pods to back-up and lower the load on the server.
+
+- **Image:** Copies the Docker image which is described here. Currently is it at `markgoertz/feedmessages` and always gets the latest available image.
+
+- **Port** With the port defined, the Ingress controller and application gets appointed to the right port. With port:`443` we can activate the TLS connection for the application.
+
+- **Resources** The resources define the limit of using computing resources of the server. With CPU and RAM memory being as metrics units, the hosting gets limited to optimize the performance, eror-handling and network resources of the application as well for the server.
+
+---
+
+####  Kubernetes | Ingress Controller file
+
+```yml 
+# Ingress controler for Kubernetes Cluster:
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: morvie-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /feeds-service(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: feeds-api-service
+            port:
+              number: 443
+```
+The Ingress Controller provider that I used within the cluster is of `NGINX`. NGINX providers a good loadbalancer and serves as an advanced reverse proxy. 
+
+Within the NGINX ingress controller configurations, the routes get automatically redirected to a secure transfer-protocol: `HTTPS` instead of `HTTP`. And does it currently route all request from the `feed-api-service` aunder the path-name: `/feeds-service`.
+
+---
+
+#### Kubernetes | Service file
+
+```yml
+# Service for the API:
+apiVersion: v1
+kind: Service
+metadata:
+  name: feeds-api-service
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    app: feeds-api
+```
+A Kubernetes service is a logical abstraction for a deployed group of pods in a cluster (which all perform the same function)
+
+It creates and enable pods to perform operations for them but share the results under a single IP-address. Since there are many types of services for Kubernetes, I choose to pick the service: ClusterIP, which means that Internal clients can send requests to a stable internal IP-address. And so are a couple more services available:
+- NodePort
+- LoadBalancer
+- ExternalName
+- Headless
+
+And if everything went as smootly and optional, the Kubernetes cluster should contain the new deployment and services!
+<div align = center>
+  <img src="../img/Cloud/Azure-services.png"></a>
+</div>
+
+
+---
+
 ## Logging and monitoring
 
 With logging and monitoring of applications can simply be done by the sources the cloud provider provides. With the local development I used `minikube` which comes in with a logging over local `pods` and `deployments`.
 
 When using Azure, the cloud provider comes with a in-build monitoring tool that gives developers an insight in the `application health` over pods and deploys. And can deliver a log over the application' loggin messages.
+
+#### Pod status logging
+
+<div align = center>
+  <img src="../img/Cloud/Azure-pod-logging.png"></a>
+</div>
+
+
+#### Server and Network load.
+
+<div align = center>
+  <img src="../img/Cloud/Kubernetes-Cluster-monitoring.png"></a>
+</div>
+
 
 # Sources:
 * Fontys (n.d) Fontys.nl https://fhict.instructure.com/courses/12452/pages/cloud-services-theoretical-background?module_item_id=829969
@@ -305,3 +469,4 @@ When using Azure, the cloud provider comes with a in-build monitoring tool that 
 
 * AWS Pricing Calculator. (n.d.). https://calculator.aws/
 
+* Services  |  Google Kubernetes Engine (GKE)  |. (z.d.). Google Cloud. https://cloud.google.com/kubernetes-engine/docs/concepts/service*

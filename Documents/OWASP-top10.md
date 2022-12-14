@@ -1,6 +1,9 @@
-﻿## OWASP - Top 10
+﻿## Security | Products + Research
 
 On this research I will explain about the OWASP top 10. This will be implemented to research about possible cyber risks and measurements I want to perform to secure my applications against possible threats. 
+
+&nbsp;
+
 <div align = center>
 
 ![](../img/Aspose.Words.f33ffc15-76a1-44a7-b085-29765b1ee53d.001.png)

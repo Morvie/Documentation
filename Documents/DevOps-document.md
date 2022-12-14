@@ -58,15 +58,12 @@ All used tools, examples and how I did set it up will be explained within this d
 &nbsp;
 &nbsp;
 
-&nbsp;
-&nbsp;
 
 <h1 id = "Steps + Tools">Steps and tools within the CI-pipeline.</h1>
 <h3>Tools</h3>
 <p>The used tools within the CI-Pipeline the following tools are defined below. These tools all add up for a contribution. 
 
 All tools are on a open-source subscription and require no money. But once the project gets extended, it will be required to purchase a subscription for some.
-
 </p>
 
 <table align = center>
@@ -112,9 +109,5 @@ All tools are on a open-source subscription and require no money. But once the p
   </tr>
 </table>
 
-&nbsp;
-&nbsp;
 
-<p>By using these tools it allows me to give a notification on the GitHub readme page. By simply adding an .svg of the CI-job. Just like this:</p>
 
-`img src="https://github.com/Morvie/Forums.API/actions/workflows/dotnet.yml/badge.svg"`
