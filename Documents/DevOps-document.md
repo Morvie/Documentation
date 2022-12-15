@@ -51,7 +51,7 @@ All used tools, examples and how I did set it up will be explained within this d
 
 ---
 
-<h1 id = "CI-pipeline">CI-pipeline visualised.</h1>
+<h1 id = "CI-pipeline">CI-pipeline visualised.📌</h1>
 <div align = center>
   <a href = "https://github.com/Morvie/Forums.API/actions"><img src="../img\job.png" alt= "CodeCov-logo" width="700" ></a>
 </div>
@@ -62,7 +62,7 @@ All used tools, examples and how I did set it up will be explained within this d
 &nbsp;
 &nbsp;
 
-<h1 id = "Steps + Tools">Steps and tools within the CI-pipeline.</h1>
+<h1 id = "Steps + Tools">Steps and tools within the CI-pipeline.🪜</h1>
 <h3>Tools</h3>
 <p>The used tools within the CI-Pipeline the following tools are defined below. These tools all add up for a contribution. 
 
@@ -116,7 +116,7 @@ All tools are on a open-source subscription and require no money. But once the p
 &nbsp;
 &nbsp;
 
-<h1 id = "Security">Security within DevSecOps!🦾</h1> 
+<h1 id = "Security">Security within DevSecOps!🔐</h1> 
 
 ### Usage of secrets within the pipelines.
 For security within the pipeline, there are a several things I kept in mind. To make sure that the CI/CD pipeline performes the operations in a safe way I decided to do a small investigation of the industry standards. 
@@ -238,9 +238,111 @@ jobs:
           [[ "${{ steps.kube-linter-action-scan.outcome }}" == "success" ]]
 ```
 
+This pipeline can be found in the following <a href="https://github.com/Morvie/FeedMessages/actions/workflows/kubelint.yml">link</a>. And for the results of the pipeline workflow, see the <a href="https://github.com/Morvie/FeedMessages/security/code-scanning?query=is%3Aclosed+branch%3Amain"> following link</a> and with closed trigger  <a href="https://github.com/Morvie/MovieMicroservice/security/code-scanning?query=is%3Aclosed+branch%3Amain">results</a>.
+
 &nbsp;
 
 
 <h1 id = "CD-pipeline">Deployment to Azure!👾</h1> 
+<div align = center>
+  <a href = "https://github.com/Morvie/Morvie-Frontend/pulls"><img src="https://swimburger.net/media/ppnn3pcl/azure.png" alt= "CodeCov-logo" width="150" ></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href = "https://github.com/Morvie/Morvie-Frontend/pulls"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png" alt= "Kubernetes-logo" width="150" ></a>&nbsp;
+</div>
+
+---
+
+The deployment of the microservice has been performed with `Kubernetes` and `Azure`. To know what my motivation was to choose Azure as Cloud-provider, I will redirect you to the following document: <a href = "https://github.com/Morvie/Documentation/blob/main/Documents/Cloud-documentation.md">Cloud-documentation</a>.
+
+So, the after the CI-pipeline prepares the application to a deployment, the `Continious deployment` a.k.a `C.D`. In this phase of the whole DevSecOps the application get build on a image and then pushed to the Azure cloud. In order to make this happen, I needed to make a Azure CD-pipeline script for GitHub actions. I generated this by Azure e.g.:
+
+```YML
+name: Azure-deployment
+"on":
+    push:
+        branches:
+            - main
+    workflow_dispatch: {}
+env:
+    ACR_RESOURCE_GROUP: Morvie
+    AZURE_CONTAINER_REGISTRY: morvie
+    CLUSTER_NAME: Morvie-cluster
+    CLUSTER_RESOURCE_GROUP: Morvie
+    CONTAINER_NAME: feedms-image
+    DEPLOYMENT_MANIFEST_PATH: |
+        ./k8s/deploy.yml
+jobs:
+    buildImage:
+        permissions:
+            contents: read
+            id-token: write
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: azure/login@v1.4.3
+              name: Azure login
+              with:
+                client-id: ${{ secrets.AZURE_CLIENT_ID }}
+                subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+                tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            - name: Build and push image to ACR
+              run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./Dockerfile ./
+    deploy:
+        permissions:
+            actions: read
+            contents: read
+            id-token: write
+        runs-on: ubuntu-latest
+        needs:
+            - buildImage
+        steps:
+            - uses: actions/checkout@v3
+            - uses: azure/login@v1.4.3
+              name: Azure login
+              with:
+                client-id: ${{ secrets.AZURE_CLIENT_ID }}
+                subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+                tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            - uses: azure/aks-set-context@v3
+              name: Get K8s context
+              with:
+                cluster-name: ${{ env.CLUSTER_NAME }}
+                resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+            - uses: Azure/k8s-deploy@v4
+              name: Deploys application
+              with:
+                action: deploy
+                images: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+                manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
+                namespace: default
+
+```
+
+And this resulted into the pipeline running independently from the other components. 
+<div align = "center">
+  <a href = "https://github.com/Morvie/FeedMessages/actions/workflows/Azure-deployment.yaml"><img src="../img/DevOps/Azure-deployment.png" alt= "Kubernetes-logo" width="700" ></a>&nbsp;
+</div>
 
 
+<h1 id = "getting-started">Used Links🔗</h1> 
+
+- Production-Grade Container Orchestration. (z.d.). Kubernetes. https://kubernetes.io/
+
+- ? R. (z.d.). Azure documentation. Microsoft Learn. https://learn.microsoft.com/en-us/azure/?product=popular
+
+- Quick Start. (z.d.). Codecov. https://docs.codecov.com/docs
+
+- GitHub Actions Documentation. (z.d.). GitHub Docs. https://docs.github.com/en/actions
+
+- Mickey Gousset. (2021, 27 september). GitHub Actions - Upload Artifacts. YouTube. https://www.youtube.com/watch?v=vlySg5UPIm4
+
+- TechWorld with Nana. (2020, 8 oktober). GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline with Docker. YouTube. https://www.youtube.com/watch?v=R8_veQiYBjI
+
+- Anton Putra. (2021, 3 november). GitHub Actions Self Hosted Runner (Autoscaling with Kubernetes). YouTube. https://www.youtube.com/watch?v=lD0t-UgKfEo
+
+- Andrew Schmelyun. (2022, 9 september). Using Docker Containers with GitHub Actions. YouTube. https://www.youtube.com/watch?v=U7TY_qUD8yA
+
+- Nick Chapsas. (2022, 25 juli). The cleanest way to use Docker for testing in .NET. YouTube. https://www.youtube.com/watch?v=8IRNC7qZBmk
+
+- -, R. (2022, 22 november). Create an ingress controller in Azure Kubernetes Service (AKS) - Azure Kubernetes Service. Microsoft Learn. https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
+
+- GitHub Marketplace: to improve your workflow. (z.d.). GitHub. https://github.com/marketplace
