@@ -116,7 +116,64 @@ All tools are on a open-source subscription and require no money. But once the p
 &nbsp;
 &nbsp;
 
+### Code-Cov + GitHub actions feature usage 
+&nbsp;
+<div align = "center">
+        <a href = "https://github.com/codecov"><img src="https://avatars.githubusercontent.com/u/8226205?s=200&v=4" alt= "CodeCov-logo" width="100"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href = "https://github.com/actions"><img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt= "GitHub Actions" width="100"></a>
+</div>&nbsp;
+
+Codecov displays an overtime code coverage report. It receives the test report that gets generated within the CI-pipeline, and transfers this to the Code-cov cloud. This makes it easier to see overtime what the added or modified features have done to the code coverage over the projects.
+
+***To showcase what has been done and how it looks to see the monitoring dashboard, will be shown below:***
+
+In order to make the code coverage report with .NET, I needed to add a CI-pipeline extension. This was the extenstion: `danielpalme/ReportGenerator-GitHub-Action@5` which allows the code coverage report to be generated from the xPlat and cobertura dotnet feature for performed Unit tests and Integrations tests within the project. 
+ 
+```YML
+      - name: Run tests with coverage
+        run: dotnet test --no-build --collect:"XPlat Code Coverage"
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5
+        with:
+          reports: 'FeedMessages.Test/TestResults/**/coverage.cobertura.xml'
+          targetdir: 'CoverageReports'
+          reporttypes: 'HtmlInline;Cobertura'
+          verbosity: 'Verbose'
+          toolpath: 'reportgeneratortool'
+```
+
+Once the report is created, it needs to be consumed later on in the pipeline. So, I used GitHub actions its feature called `Artifacts`. With Artifacts you can make file temporary available for download only or forever, and share the content with other workflows within the pipeline. So, I implemented this feature and uploaded and downloaded the artifacts for later in the progress. 
+
+***See image below for an Artifact:*** 
+<div align = center>
+ <img src="../img\DevOps\Github-actions-Artifacts.png" alt= "Github artifact" width="600">
+</div>
+
+#### Upload of artifact:
+```yml
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: CoverageReports        
+          path: CoverageReports
+```
+&nbsp;
+
+And showcases once the artifact is uploaded to CodeCov a overview of the code coverage over the microservice. Since CodeCov is `Open Source` it only allows you to upload `two projects` and if you want to upload more projects it will charge you with additional costs.
+&nbsp;
+
+<div align = center>
+  <a href = "https://github.com/Morvie/Forums.API/actions"><img src="../img\DevOps/Code-cov report.png" alt= "CodeCov-logo" width="500" ></a>
+</div>
+&nbsp;
+&nbsp;
+
 <h1 id = "Security">Security within DevSecOps!🔐</h1> 
+
+&nbsp;
+<div align = "center">
+        <a href = "https://github.com/dependabot"><img src="https://avatars.githubusercontent.com/u/27347476?s=200&v=4" alt= "dependabot" width="100"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href = "https://github.com/actions"><img src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" alt= "GitHub Actions" width="100"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href = "https://github.com/snyk"><img src="https://avatars.githubusercontent.com/u/12959162?s=200&v=4" alt= "Snyk" width="100"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <a href = "https://www.sonarsource.com/products/sonarcloud/"><img src="https://avatars.githubusercontent.com/u/39168408?v=4" alt= "SonarCloud" width="100"></a>
+</div>&nbsp;
 
 ### Usage of secrets within the pipelines.
 For security within the pipeline, there are a several things I kept in mind. To make sure that the CI/CD pipeline performes the operations in a safe way I decided to do a small investigation of the industry standards. 
@@ -159,7 +216,9 @@ These variables are implemented into the ${{ secrets.environmental variable }} p
 ```
 &nbsp;
 
-### Static code analysis.
+### Static code analysis with SonarCloud
+
+
 In order to write good and secure code, I implemented several tools to assure the quality of the code. The tools I have used are: 
 - DependaBot
 - SonarCloud
@@ -182,6 +241,7 @@ I also used dependabot for security tracking of code, and if there are issues fo
 <div align = center>
   <a href = "https://github.com/Morvie/Morvie-Frontend/pulls"><img src="../img\DevOps\dependabot-versions.png" alt= "CodeCov-logo" width="700" ></a>
 </div>
+
 
 &nbsp;
 
