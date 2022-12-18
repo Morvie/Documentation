@@ -251,9 +251,11 @@ Also does the accesstokens and refreshtoken, which are refreshed during times. O
     <img src="../img/Security/OAuth2.0.png"/>
   </a>
 </div>
+&nbsp;
 
 ---
 
+&nbsp;
 <h1 id = "GitHub actions">GitHub actions security tools🛸</h1> 
 
 In GitHub, I have used a several different security tools to protect the code against actions that could create malicious code or misscases. 
