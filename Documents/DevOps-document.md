@@ -11,7 +11,7 @@
     <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/logo.png" alt="Logo" width="250" height="250">
   </a>
 
-  <h3 align="center"></h3>
+  <h3 align="center">DevSecOps-document</h3>
 
   <p align="center">
     <br />
@@ -245,9 +245,41 @@ I also used dependabot for security tracking of code, and if there are issues fo
 
 &nbsp;
 
+### Docker Linter.
+
+Within this project, the Dockerfile that is used to `containerize` the application with Docker in combination with Docker-compose command. But in order to validate the good practices and prevent errors in the image, I decided to use a tool to lint the Dockerfile. It is called: Docker-lint-action which is implemented on the CI-pipeline and checks the Dockerfile at pull requests. Link to the GitHub page as followed: <a href = "https://github.com/luke142367/Docker-Lint-Action">here</a>. 
+
+The reason to choose it for Pull-Requests is since that the main-branch is protected. So, only commits to the main branch are allowed on pull requests by merging branches. 
+
+```yml
+name: Check Dockerfile with Docker linter
+
+on:   
+
+  pull_request:
+    branches: []
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: lint
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: ./Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+ 
+
+
 ### KubeLinter.
 
-I also used the KubeLinter, which is an Open-Source tool in the CI-pipeline which checks `all Kubernetes YML files`.  For this I needed to configure two YML files which each define the scope of this tracker. And I use this to validate all used YML files for Kubernetes. To ensure I don't use bad practices or errors in Kubernetes for hosting.
+I also used the KubeLinter, which is an Open-Source tool in the CI-pipeline which checks `all Kubernetes YML files`.  For this I needed to configure two YML files which each define the scope of this tracker. And I use this to validate all used YML files for Kubernetes. To ensure I don't use bad practices or errors in Kubernetes for hosting. 
+
+My teacher consulted about the option to use this and look up for an own choice of tool/framework. So, I looked up for a top-10 open-source Kubernetes linters on here:  <a href = "https://developers.redhat.com/articles/2022/06/20/8-open-source-kubernetes-security-tools">here</a>. 
 
 ```yml
 name: Check Kubernetes YAMLs with kube-linter
@@ -406,3 +438,7 @@ And this resulted into the pipeline running independently from the other compone
 - -, R. (2022, 22 november). Create an ingress controller in Azure Kubernetes Service (AKS) - Azure Kubernetes Service. Microsoft Learn. https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli
 
 - GitHub Marketplace: to improve your workflow. (z.d.). GitHub. https://github.com/marketplace
+
+- Oram, Andy. 8 open source Kubernetes security tools. Red Hat Developer. https://developers.redhat.com/articles/2022/06/20/8-open-source-kubernetes-security-tools
+
+- GitHub, L. (z.d.). GitHub - luke142367/Docker-Lint-Action: A GitHub action for linting Docker Files. GitHub. https://github.com/luke142367/Docker-Lint-Action

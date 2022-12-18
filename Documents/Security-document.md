@@ -1,4 +1,52 @@
-﻿## Security | Products + Research
+﻿
+---
+
+<a name="readme-top"></a>
+
+<!-- PROJECT LOGO -->
+
+
+<div align="center">
+  <a>
+    <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/logo.png" alt="Logo" width="250" height="250">
+  </a>
+
+  <h3 align="center">Security document.</h3>
+
+  <p align="center">
+    <br />
+    <a href="https://github.com/orgs/Morvie/repositories"><strong>View repositories»</strong></a>
+    <br />
+    <br />
+    <a href="https://morvie-frontend-alpha.vercel.app/">View Demo</a>
+    ·
+    <a href="https://github.com/Morvie/Documentation/issues">Report Bug</a>
+  </p>
+</div>
+
+---
+
+<!-- TABLE OF CONTENTS -->
+<h1 id="table-of-contents"> :mailbox_with_mail: Table of Contents</h1>
+
+
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#Introduction"> ➤ Introduction.</a></li>
+    <li><a href="#OWASP"> ➤ OWASP Top 10</a></li>
+    <li><a href="#CIA"> ➤ CIA-Model</a></li>
+    <li><a href="#Keycloak"> ➤ Keycloak authentication manager</a></li> 
+    <li><a href="#GitHub actions"> ➤ GitHub actions security</a></li>
+    <li><a href="#Infrastructure"> ➤ Infrastructure security</a></li>
+    <li><a href="#references"> ➤ Links</a></li>
+  </ol>
+</details>
+<br/>
+
+---
+
+<h1 id = "OWASP">Checklist with OWASP Top 10!🔐</h1> 
 
 On this research I will explain about the OWASP top 10. This will be implemented to research about possible cyber risks and measurements I want to perform to secure my applications against possible threats. 
 
@@ -7,7 +55,7 @@ On this research I will explain about the OWASP top 10. This will be implemented
 <div align = center>
 
 ![](../img/Aspose.Words.f33ffc15-76a1-44a7-b085-29765b1ee53d.001.png)
-#### Figure 3: OWASP TOP 10 | [https://owasp.org/Top10/assets/mapping.png](https://owasp.org/Top10/assets/mapping.png)
+#### Source from: | [https://owasp.org/Top10/assets/mapping.png](https://owasp.org/Top10/assets/mapping.png)
 
 </div>
 
@@ -29,3 +77,204 @@ On this research I will explain about the OWASP top 10. This will be implemented
 |A09: 2021 – Security logging and monitoring failures|<p>This vulnerability starts by faulty implementation of the security systems. In which the system fails to sufficiently log monitor or report security events. Making the applications detections on suspicious activities non-existing and let the attacker exploit the application without any troubles or performed security measurements.</p><p></p><p>By faulty monitoring and logging, the application gets more vulnerable to attacks as:</p><p>- Code injection</p><p>- Buffer overflow</p><p>- Command injection</p><p>- Cross-site scripting</p>|<p>- Make sure that all login, access control and server-side validation failure can be logged.  So, forensic analysis can identify suspicious or malicious account. This can be implemented by adding a logging feature.</p><p></p><p>- As a DevSecOps operator, I should be able to effectively monitor and alert on suspicious activities that are detected.</p><p></p><p>- By encoding the log data is encoded, so in case of a breach that the log data stays unharmed hopefully.</p>|
 |A10: 2021 – Server-side request forgery |<p>This attack happens when the attacker intercepts the request of the CI/CD pipeline and install malicious code within the test/build.</p><p></p><p>So, it is not an attack itself, but it is one of the main causes’ attacks can occur. Due to black hats finding ways to infiltrate through a faulty version of a system.</p>|<p>- Validate all client-input data in order to prevent server-side request forgery. </p><p></p><p>- Disable HTTP redirections and do not click on one of these links.</p><p></p><p>- Enforce URL schema port and destination with an allowance list.</p>|
 
+---
+
+<h1 id = "CIA">Checklist with the CIA-model!👮🏼</h1> 
+
+&nbsp;
+&nbsp;
+
+---
+
+<h1 id = "Keycloak">Keycloak authentication manager!🔑</h1> 
+
+In order to let the users of the application login and perform their own unique operations, I have considered a option: "do I want to use a access management solution in my application?" and so have I performed a research about the benefits of this.
+So, there are two main competitors about access management solutions:
+* Keycloak 
+* Auth0
+
+And do I have chosen for using Keycloak as an access management solution for my application. The main reason is that Keycloak provides more then Auth0 and so, the security options are more available.
+
+So I started with setting Keycloak up in my `docker-compose` in order to make the relation work between the application and the keycloak service:
+
+```YML
+version: '3.4'
+
+networks:
+  backend:
+
+volumes:
+  keycloak-database:
+
+services:
+  keycloak-instance:
+    image: quay.io/keycloak/keycloak:18.0.2
+    container_name: "keycloak-instance"
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak
+      - KC_DB_URL=jdbc:postgresql://keycloak-database:5432/keycloak
+      
+    volumes:
+      - ./backup:/tmp/import
+    ports:
+      - "2222:8080"
+    networks:
+      - backend
+    depends_on:
+      - keycloak-database
+
+  keycloak-database:
+    image: postgres:14.2
+    container_name: "keycloak-database"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    ports:
+      - "2223:5432"
+    networks:
+      - backend
+    volumes:
+      - keycloak-database:/var/lib/postgresql/data
+```
+
+And once it started up, I could access the keycloak instance from Docker🐳 on the following url: `http://localhost:2222/` where I could perform configuration operations! And do I have a keycloak database of `PostgreSQL database.`
+
+I have performed an operation in which I create a keycloak realm called: `Morvie`, just like my application, where I am able to create public and private keys for JWT, security measures and user authentication/authorization configurations. And so focusses Keycloak on providing `high security measures and standards`, and do I have implemented the following features with it:
+
+- Brute force detection
+- ReCaptcha bot detection
+- Usage of OAuth2.0 authentication principle.
+- Usage of JWT tokens.
+- Usage of PBKDF2 hashing algorithm for storing password credentials.
+
+&nbsp;
+
+### Brute force detection 🤖
+
+In order to activate brute force detection, I have enabled a feature within keycloak under the realm:
+
+<div align="center">
+  <a>
+    <img src="../img/security/Brute-force detection.png"/>
+  </a>
+</div>
+
+&nbsp;
+
+Once it is enabled, I could configure the login failure settins, wait times and etc. And how this works is that the black hat user triggers automated brute force attack, and the malicious machine 'guesses' with a dictionary of possible passwords on the password of the user. The username is often received by social engineering or human errors by the blackhat user. And by enabling this feature, the malicious machine is limited on attempts since the account gets locked out for a set amount of time.
+
+&nbsp;
+
+### reCAPTCHA bot detection 🤖
+In order to protect the application against bots, who try to create a account within this application, is the application protected with `ReCaptcha`. ReCaptcha is a tool by `Google` which let users who are new or have suspicious activities perform a recaptcha challenge. If the users fails to complete this challenge, it may not create a new account. 
+
+<div align="center">
+  <a>
+    <img src="../img/security/Recaptch-protection.png"/>
+  </a>
+</div>
+
+&nbsp;
+
+### User protection validation 🔐🖇️
+The users of this application are required to make a password that is protected with requirements. The following requirements are set and required for the users who want to make a account.
+- Minimal lowercase characters: 1
+- Minimun length: 8
+- Special characters: 1
+- Not containing any email addresses.
+- Hashing algorithm: PBKDF2-SH256
+- Hashing iterations: 27500
+
+As seen below within the keycloak configuration:
+
+<div align="center">
+  <a>
+    <img src="../img/security/keycloak-password.png"/>
+  </a>
+</div>
+
+&nbsp;
+
+## Two Factor Authentication.
+
+<div align="center">
+  <a>
+    <img src="../img/security/keycloak-2FA.png"/>
+  </a>
+</div>
+
+The application uses a Two-Factor Authentication to authenticate users with a two factor operation. If the user wants to login, the user needs to fill in its username and password. And once it is succeeded by the application, the two factor authentication gets triggered and the user needs to use the google multifactor authentication mechanism and fill in a once-time code:
+<table align = center>
+  <tr>
+    <th>
+        <a href = "https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=nl&gl=US"><img src="https://play-lh.googleusercontent.com/_1CV99jklLbXuun-6E7eCPR-sKKeZc602rhw_QHZz-qm7xrPdgWsJVc7NtFkkliI8No" alt= "Authenticator" width= "800"></a>
+    </th>
+    <th>
+        <a href = "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=nl&gl=US"><img src="https://play-lh.googleusercontent.com/oMv9o-L-mNKdyL3Hp6fvNwrhAyIYB1iP3p644hxN03oFU0R2oevnmxmCLF6FewjzZXU" alt= "Google Authenticator" width= "800"></a>
+    </th>
+
+  </tr>
+  <tr>
+    <td>
+      Microsoft authenticator
+    </td>
+    <td>
+    Google Authenticator
+    </td>
+  </tr>
+</table>
+
+<div align="center">
+  <a>
+    <img src="https://www.iphoned.nl/wp-content/uploads/2020/12/google-authenticator-accounts-overzetten-uitg.jpg"/>
+  </a>
+</div>
+
+
+&nbsp;
+
+## OAuth2.0 authentication.
+Keycloak authentication service uses a high-level industry-standard protocol for authorization called: `OAuth2.0`. OAuth2.0 is a secure, open data sharing standards that secures authentication and authorization operations between services without revealing the user's identity or credentials. 
+
+The way it works is that it enables applications to access each other's data without revealing user's identity or credentials and uses username and password tokens. It uses a `SSL Secure Sockets Layer` to ensure that data between services remain private.
+
+Also does the accesstokens and refreshtoken, which are refreshed during times. Once the user is not-active, the refreshtoken' job is to shut down the session and let the user later on not be able to perform any operations later.
+
+<div align="center">
+  <a>
+    <img src="../img/security/OAuth2.0.png"/>
+  </a>
+</div>
+
+---
+
+<h1 id = "GitHub actions">GitHub actions security tools🛸</h1> 
+
+&nbsp;
+&nbsp;
+
+---
+
+<h1 id = "Infrastructure">Infrastructure security🛣️</h1> 
+
+- Azure database connection is secure by TLS1.2 encryption.
+- Usage of HTTPS in Ingress controller.
+- Usage of HTTPS in application.
+- Usage of secrets within 
+- Usage of secrets within the pipeline GitHub actions.
+
+&nbsp;
+&nbsp;
+
+---
+
+<h1 id = "references">Used sources🖇️</h1> 
+
+&nbsp;
+&nbsp;
