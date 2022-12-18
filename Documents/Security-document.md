@@ -289,7 +289,7 @@ For `Kubernetes` I have used a kubernetes linter of <a href="https://docs.kubeli
 It provides feedback back on `pull-request` and can detect errors in code and vulnerabilities. To see an example of the given feedback see the image below:
 
 <div align="center">
-  <img src="../img/Security/kubernetes-linter.png" alt="Logo"/>
+  <img src="../img/Security/Kubernetes-linter.png" alt="Logo"/>
 </div> 
 
 &nbsp;
