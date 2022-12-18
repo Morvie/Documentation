@@ -256,8 +256,67 @@ Also does the accesstokens and refreshtoken, which are refreshed during times. O
 
 <h1 id = "GitHub actions">GitHub actions security tools🛸</h1> 
 
+In GitHub, I have used a several different security tools to protect the code against actions that could create malicious code or misscases. 
+In the sections below, I explained why I used it:
+
+## Docker linter 🐳
+
+<div align="center">
+  <img src="https://camo.githubusercontent.com/c0bc16116647eb3c773360c495d8537d509df514fa8f77b545fca2edde5fc3d7/68747470733a2f2f6861646f6c696e742e6769746875622e696f2f6861646f6c696e742f696d672f6361745f636f6e7461696e65722e706e67" alt="Logo" width="150" height="150"/>
+</div>  
+
+I have used Docker linter of <a href="https://github.com/luke142367/Docker-Lint-Action">@Luke142367/Docker-lint-actions</a> which checks the `Dockerfile` within the project.
+
+
+It provides feedback back on `pull-request` and can detect errors in code and vulnerabilities. To see an example of the given feedback see the image below:
+
+<div align="center">
+  <img src="../img/Security/Docker-linter.png" alt="Logo"/>
+</div> 
+
 &nbsp;
 &nbsp;
+
+## Kubernetes linter 🛞
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/stackrox/kube-linter/main/images/logo/KubeLinter-vertical.svg" alt="Logo" width="200"/>
+</div>  
+&nbsp;
+
+For `Kubernetes` I have used a kubernetes linter of <a href="https://docs.kubelinter.io/#/">Kube Linter</a> which checks all `kubernetes yml files`. 
+
+It provides feedback back on `pull-request` and can detect errors in code and vulnerabilities. To see an example of the given feedback see the image below:
+
+<div align="center">
+  <img src="../img/Security/kubernetes-linter.png" alt="Logo"/>
+</div> 
+
+&nbsp;
+&nbsp;
+
+## Dependabot 🤖
+
+<div align="center">
+  <img src="https://avatars.githubusercontent.com/u/27347476?s=280&v=4" width = "150" alt="Logo"/>
+</div> 
+&nbsp;
+
+Dependabot is a tool that is used in every repository for multiple purposes. 
+- Security 
+- Dependency packages
+
+It automatically updates dependencies by adding dependencies updates to the pull request tab. And the developer can decide whether to add the dependencies or not. And the update of the dependencies can be automatically merged with the `main-branch`.
+
+<div align="center">
+  <img src="../img/Security/dependabot-update.png" alt="Logo"/>
+</div>
+
+Also does Dependabot have an option to notify the developer of possible malicious code within the code-base. It notify by the security tab on GitHub the possible cause of malicious code.
+<div align="center">
+  <img src="../img/Security/Dependabot-security.png" alt="Logo"/>
+</div>
+
 
 ---
 
