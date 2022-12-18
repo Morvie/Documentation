@@ -161,7 +161,7 @@ In order to activate brute force detection, I have enabled a feature within keyc
 
 <div align="center">
   <a>
-    <img src="../img/security/Brute-force detection.png"/>
+    <img src="../img/Security/Brute-force detection.png"/>
   </a>
 </div>
 
@@ -176,7 +176,7 @@ In order to protect the application against bots, who try to create a account wi
 
 <div align="center">
   <a>
-    <img src="../img/security/Recaptch-protection.png"/>
+    <img src="../img/Security/Recaptch-protection.png"/>
   </a>
 </div>
 
@@ -195,7 +195,7 @@ As seen below within the keycloak configuration:
 
 <div align="center">
   <a>
-    <img src="../img/security/keycloak-password.png"/>
+    <img src="../img/Security/keycloak-password.png"/>
   </a>
 </div>
 
@@ -205,7 +205,7 @@ As seen below within the keycloak configuration:
 
 <div align="center">
   <a>
-    <img src="../img/security/keycloak-2FA.png"/>
+    <img src="../img/Security/keycloak-2FA.png"/>
   </a>
 </div>
 
@@ -248,7 +248,7 @@ Also does the accesstokens and refreshtoken, which are refreshed during times. O
 
 <div align="center">
   <a>
-    <img src="../img/security/OAuth2.0.png"/>
+    <img src="../img/Security/OAuth2.0.png"/>
   </a>
 </div>
 
