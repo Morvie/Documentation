@@ -175,6 +175,50 @@ And showcases once the artifact is uploaded to CodeCov a overview of the code co
         <a href = "https://github.com/snyk"><img src="https://avatars.githubusercontent.com/u/12959162?s=200&v=4" alt= "Snyk" width="100"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <a href = "https://www.sonarsource.com/products/sonarcloud/"><img src="https://avatars.githubusercontent.com/u/39168408?v=4" alt= "SonarCloud" width="100"></a>
 </div>&nbsp;
 
+### Automated Load testing 🔧
+
+For load testing with K6, I have wanted to use automation. So, in this case I have applied a GitHub actions YML file in which I trigger a `PowerShell` script with my own GitHub actions `self-hosted runner`. The reason to run this on my local machine is simply to not shrink the credits I have available on `Azure`.
+
+The following script has been used to trigger the job in my own machine' runner:
+
+```YML
+name: Perform load tests on assigned URL-address. 
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  run-K6-load-tests:
+    name: K6 Load Test
+    runs-on: self-hosted
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
+      - name: Perform load tests 
+        shell: powershell
+        run: ./scripts/commands/run_load_test.ps1
+```
+```ps1
+# Used docker compose to make sure the Grafana and Influx services are up and running. 
+# In order to make the output to be adapted within Influx and show the matrixs into the Grafana dashboard.
+docker-compose -f docker-compose.yml up -d 
+Write-Output "--------------------------------------------------------------------------------------"
+Write-Output "Load testing with Grafana dashboard http://localhost:3000/d/k6/k6-load-testing-results"
+Write-Output "--------------------------------------------------------------------------------------"
+k6 run /scripts/script.js --out json=test.json --out influxdb=http://localhost:8086/k6 
+```
+
+In which resulted in the following jobs to be completed as: 
+
+[![Perform load tests on production.](https://github.com/Morvie/FeedMessages/actions/workflows/load-test.yml/badge.svg)](https://github.com/Morvie/FeedMessages/actions/workflows/load-test.yml)
+
+This job has been executed from the `Feeds-microservice`, one of the components that had been deployed to `Azure`.
+
+&nbsp;
+
+
 ### Usage of secrets within the pipelines.
 For security within the pipeline, there are a several things I kept in mind. To make sure that the CI/CD pipeline performes the operations in a safe way I decided to do a small investigation of the industry standards. 
 

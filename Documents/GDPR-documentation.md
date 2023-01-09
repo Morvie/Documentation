@@ -11,7 +11,7 @@
     <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/logo.png" alt="Logo" width="250" height="250">
   </a>
 
-  <h1 align="center">GDPR documentation</h1>
+  <h1 align="center">GDPR + Observability and Performance documentation</h1>
   <h3 align="center">Morvie Documentation</h3>
 
   <p align="center">
@@ -27,9 +27,24 @@
 
 ---
 
+<!-- TABLE OF CONTENTS -->
+ <h1 id="table-of-contents"> :mailbox_with_mail: Table of Contents</h1>
+
+
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#GDPR and Data comlexity"> ➤ GDPR and Data complexities.</a></li>
+    <li><a href="#Distributed data"> ➤ Distributed data.</a></li>
+    <li><a href="#Observability tools"> ➤ Observability tools.</a></li>
+  </ol>
+</details>
+<br/>
+
 &nbsp;
 &nbsp;
 
+<h1 id = "GDPR and Data comlexity">🔏 GDPR and Data complexities</h1>
 
 ## 1 - Lawful basis and transparency
 
@@ -42,6 +57,8 @@
 Morvie as the application holds several data topics. These topics are personal data, movie data and user input data (such as user given reviews and ratings). So, this will explain what will be done with the personal data of our customers.
 
 `Personal data` gets collected by the application in order to make it run operations. Only the username, password and a unique email address is required to create a personal account. And with the personal account the user would be able to create a feed within the forums about a movie. So, at registry the application will create a unique personal identifier so that the application can use this identifier to allocate the forums with the correct account. The email of the user will be used to make sure that the user can login and/or can perform a 'forgot my password' recovery whenever the user forgot this (possibility in the near future as a feature). And thus can recover the account. 
+
+
 
 The operators of morvie can not see the personal information of the user since `keycloak` user management service uses a plugin that encrypts the personal information of the user. It is called `Secure Credentials Store - Vault SPI`. And by user roles only limited operators can access the encrypted personal information for development purposes and are qualified for accessing this section. 
 
@@ -117,6 +134,7 @@ Within the user registery form, there will be a `clear` and `big` text box in wh
 ## 2 - Data security
 
 
+
 ---
 
 &nbsp;
@@ -157,7 +175,7 @@ As well as the option to delete the personal information. This is currently been
 
 
 
-# Distributed data | CAP theorem
+<h1 id = "Distributed data">📅 Distributed data | CAP theorem</h1>
 The CAP theorem is a way to validate the distributed data systems. A distributed data system provider can be divided into three selections. 
 
 <div align = center>
@@ -187,6 +205,42 @@ The `Azure|MySQL database` will be used on the cloud environment. Which will aut
 
 #### Use-case within project.
 My usage within this project would be a `Azure MySQL database`. Within this database it can automatically scale up when needed, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
+
+
+<h1 id = "Distributed system">Distributed system</h1>
+
+For this project, I build two microservices on a CQRS code pattern. This is pattern which divide the application in two different services as `READ-operations` and `WRITE-operations`. 
+
+*Why is this good for distributed system?*
+
+- With the usage of Command Query Seggregation Responability, it distributes data faster than the traditional repository code pattern. The reason is that it gives the application an seggregation in between these two operations, which allows the application to perform what is important. If the write operations are getting more used, it can autoscaling of kubernetes to scale up the server usage either horizontally or vertically.
+
+And also can the application use the benefits of SQL and NoSQL databases since SQL have a faster performance in reading data from the SQL database, where the NoSQL database has a better performance in writing and handling data. I performed research about this which can be seen <a href="https://github.com/Morvie/Documentation/blob/main/Documents/Scalability-documentation.md">here</a>.
+
+The disadvantage of using CQRS is that it makes the application harder to understand and maintain. This could trouble future updates and maintainance on the application.
+
+
+
+Used Messaging.
+--> behouden van berichten en intercommunicatie tussen writer en receiver.
+
+Elk microservice heeft eigen database.
+
+Kubernetes autoscale the docker container by certain percentage and scale up the pods horizontal
+
+
+
+
+
+<h1 id = "Observability tools">🔧 Observability tools</h1>
+
+Grafana scalable loading
+
+Keycloak user data modification.
+
+Keycloak session usage
+
+Keycloak session monitoring.
 
 ---
 

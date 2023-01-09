@@ -447,6 +447,38 @@ When using Azure, the cloud provider comes with a in-build monitoring tool that 
   <img src="../img/Cloud/Kubernetes-Cluster-monitoring.png"></a>
 </div>
 
+<br/>
+
+## Future recommendations on expansion.
+
+*based the landscape of cloud service providers, e.g. Azure, Google, AWS, DigitalOcean you have done, give recommendations w.r.t. the future expansion of your application (vertical or horizontal)*
+
+### What is horizontal and vertical scaling in cloud hosting?
+
+The cloud has two options to automatically scale up when the service gets overloaded. These two options are scaling up in the horizontal or vertical way. And I want to explain what both of them do, and why it improves the availability of the application services.
+
+---
+
+**Horizontal scaling:** 
+
+➡️*This way of scaling up has to do with the server itselves, each program running on the server resources gets a amount of assigned server resources it can use. And when it gets override to a certain level of usage, it automatically duplicates its program to a new server resource so, that the application service's load gets reduced and divided.*
+
+So, in KuberNetes the pod gets duplicated to a new pod and it can be limited to a number of pods in order to not overload the server itselves by pods. It is very reliable and has a great redundancy in a rare event of an outage.
+
+The cons of using horizontal scalling as technique to scale up the application, is that the cost could be higher compaired to the vertical scaling if not configured correctly.
+
+---
+
+**Vertically scaling:** 
+
+➡️*With scaling the application vertically, instead of duplicating itselves, it scales up in usage of server resources. It can also be cheaper when configured corrrectly.*
+
+The cons of using this method is that it could still overload the server if the server is not configured properly. If there is used a manual of scheduled scaler, this will not act on the actual load of the server. And could be to much usage or to less. So, it would be not cost and usage efficient.
+
+---
+
+
+
 
 # Sources:
 * Fontys (n.d) Fontys.nl https://fhict.instructure.com/courses/12452/pages/cloud-services-theoretical-background?module_item_id=829969
@@ -470,3 +502,5 @@ When using Azure, the cloud provider comes with a in-build monitoring tool that 
 * AWS Pricing Calculator. (n.d.). https://calculator.aws/
 
 * Services  |  Google Kubernetes Engine (GKE)  |. (z.d.). Google Cloud. https://cloud.google.com/kubernetes-engine/docs/concepts/service*
+
+* CloudCheckr | 8 July 2021 | https://cloudcheckr.com/cloud-automation/horizontal-vertical-cloud-scaling/
