@@ -48,7 +48,7 @@
 
 Within this document I will present you the software development life cycle. The importance of this cycle is that the code is not only secured by using tools and scanners, but also by the developer on his thoughts on how to secure data ethically and who and how to give permission on using this data. With knowledge of how to setup basic security, the application would get little by little more secured.
 
-Within this document, I will use the SDLC as a guideline and perform analysis, design, implementation and testing.
+Within this document, I will use the SDLC as a guideline and perform analysis, design, implementation and testing. Which will marked before the title of each header section.
 
 ---
 
@@ -288,42 +288,51 @@ On this research I will explain about the OWASP top 10. This will be implemented
 | A07: 2021 – Identification and Authentication failures | <p>This is a vulnerability within the application where the user’s identity, authentication and/or session management lacks protection and is vulnerable against authentication attacks such as brute-force attacks and other similar attacks.</p><p></p><p>Also does the application lack in security prevention such as tokens, protected URL’s or encryption.</p><p></p><p>But also, the attacker can use obtained passwords from earlier attacks, and use automated attacks against a few different websites. So, eventually the attacker gets a notification on which websites are using the same password. This could happen due to weak hashing algorithm and could encrypt the user credentials.</p><p></p> | <p>- Implement a weak password check where input can be tested against the top 10.000 worst passwords of all time. In order to prevent an automated or brute force attack.</p><p></p><p>- Delay on failed login attempts, so that the brute force or automated attacks are denied/delayed. And on repeating attempts alarm the moderator so, actions can be performed.</p><p></p><p>- Session Identifier should not be included within the URL parameter. This is a bad practice. And should be secured stored and made invalid after logout, idle and absolute timeouts.</p><p></p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | A08: 2021 – Software and data integrity failures       | <p>Software and data integrity failures occur when the infrastructure and code implementation lack the ability to protect the code against integrity violations.</p><p>This leaves the system vulnerable against several attacks such as:</p><p>- Denial of Service (DoS)</p><p>- Code Injection</p><p>- Command Execution</p><p></p><p>This attack happens when the attacker intercepts the request of the CI/CD pipeline and install malicious code within the test/build.</p><p></p>                                                                                                                                                                                                                             | <p>- Only use libraries such as NPM or Maven that are consuming trusted repository. By not doing this, the risk of malicious stuff is higher.</p><p></p><p>- Make sure the CI/CD pipeline has a proper segregation between actions and the integrity of the code flowing through the build and deploy process. </p><p></p><p>- Make sure within GitHub to be authenticate, so the data comes and goes to valid and trusted sources.</p><p></p><p>- The system should be thoroughly tested before deployment to the real users of the application. So, install a test-environment. </p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | A09: 2021 – Security logging and monitoring failures   | <p>This vulnerability starts by faulty implementation of the security systems. In which the system fails to sufficiently log monitor or report security events. Making the applications detections on suspicious activities non-existing and let the attacker exploit the application without any troubles or performed security measurements.</p><p></p><p>By faulty monitoring and logging, the application gets more vulnerable to attacks as:</p><p>- Code injection</p><p>- Buffer overflow</p><p>- Command injection</p><p>- Cross-site scripting</p>                                                                                                                                                         | <p>- Make sure that all login, access control and server-side validation failure can be logged. So, forensic analysis can identify suspicious or malicious account. This can be implemented by adding a logging feature.</p><p></p><p>- As a DevSecOps operator, I should be able to effectively monitor and alert on suspicious activities that are detected.</p><p></p><p>- By encoding the log data is encoded, so in case of a breach that the log data stays unharmed hopefully.</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| A10: 2021 – Server-side request forgery                | <p>This attack happens when the attacker intercepts the request of the CI/CD pipeline and install malicious code within the test/build.</p><p></p><p>So, it is not an attack itself, but it is one of the main causes’ attacks can occur. Due to black hats finding ways to infiltrate through a faulty version of a system.</p>                                                                                                                                                                                                                                                                                                                                                                                    | <p>- Validate all client-input data in order to prevent server-side request forgery. </p><p></p><p>- Disable HTTP redirections and do not click on one of these links.</p><p></p><p>- Enforce URL schema port and destination with an allowance list.</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| A10: 2021 – Server-side request forgery                | <p>This attack happens when the attacker intercepts the request of the CI/CD pipeline and install malicious code within the test/build.</p><p></p><p>So, it is not an attack itself, but it is one of the main causes’ attacks can occur. Due to black hats finding ways to infiltrate through a faulty version of a system.</p>                                                                                                                                                                                                                                                                                                                                                                                    | <p>- Validate all client-input data in order to prevent server-side request forgery. </p><p></p><p>- Disable HTTP redirections and do not click on one of these links.</p><p></p><p>- Enforce URL schema port and destination with an allowance list.</p>                                    |
 
 &nbsp;
 &nbsp;
 
 ---
 
-<h1 id = "Access management">Design | Access management and identity</h1>
+<h1 id = "Access management">Design + Monitoring |
+
+Access management and identity</h1>
 
 Within keycloak, I managed to have several different access management for the users of this project. 
 So, as described in the technical documentation for the project, there are only two real roles within this application. The first role is a normal user who can only adjust their own profile and decide to create their own feeds.
 
 And we do hava a moderator role, who can manage feeds and see keycloak configuration and the users activity based on username on the admin console. `But is not able to adjust anything within this system`!
 
+<div align="center">
+  <img src="../img/Security/Keycloak-realm-manager.png" alt="Logo"/>
+
+On this picture, it is shown that the user group within the realm is called: Maintainer.
+</div>
+
+This maintainer can only perform the following operations within the realm: 
+* Manage events
+* View events
+* View-realm
+
+Which is assigned to the user: John Doe.
+<div align="center">
+  <img src="../img/Security/Keycloak-user-group.png" alt="Logo"/>
+</div>
 
 
+I manually tested with the user role, to see my functionalities within the admin console. And this is the result:
 
 
+<div align="center">
+  <img src="../img/Security/Keycloak-John-Adminconsole.png" alt="Logo"/>
+    <img src="../img/Security/Keycloak-John-Event.png" alt="Logo"/>
+</div>
 
+And enables the possibility to only see previous assigned functionalities. John Doe is not able to see the `users`, `import`, `export` and has no modification options.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+&nbsp;
+&nbsp;
 
 
 <h1 id = "GitHub actions">Design | GitHub actions security tools🛸</h1>
@@ -331,7 +340,7 @@ And we do hava a moderator role, who can manage feeds and see keycloak configura
 In GitHub, I have used a several different security tools to protect the code against actions that could create malicious code or misscases.
 In the sections below, I explained why I used it:
 
-## Docker linter 🐳
+## Protect configuration | Docker linter 🐳
 
 <div align="center">
   <img src="https://camo.githubusercontent.com/c0bc16116647eb3c773360c495d8537d509df514fa8f77b545fca2edde5fc3d7/68747470733a2f2f6861646f6c696e742e6769746875622e696f2f6861646f6c696e742f696d672f6361745f636f6e7461696e65722e706e67" alt="Logo" width="150" height="150"/>
@@ -348,7 +357,7 @@ It provides feedback back on `pull-request` and can detect errors in code and vu
 &nbsp;
 &nbsp;
 
-## Kubernetes linter 🛞
+## Protect configuration | Kubernetes linter 🛞
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/stackrox/kube-linter/main/images/logo/KubeLinter-vertical.svg" alt="Logo" width="200"/>
@@ -366,7 +375,7 @@ It provides feedback back on `pull-request` and can detect errors in code and vu
 &nbsp;
 &nbsp;
 
-## Dependabot 🤖
+## Version-control | Dependabot 🤖
 
 <div align="center">
   <img src="https://avatars.githubusercontent.com/u/27347476?s=280&v=4" width = "150" alt="Logo"/>
@@ -390,14 +399,78 @@ Also does Dependabot have an option to notify the developer of possible maliciou
   <img src="../img/Security/Dependabot-security.png" alt="Logo"/>
 </div>
 
+## Static code analysis | Sonar Cloud Security
+
+<div align="center">
+  <img src="https://cdn.plainconcepts.com/wp-content/uploads/2020/09/sonarcloud-1.png" width = "150" alt="Logo"/>
+</div> 
+&nbsp;
+
+Within the application, I applied SonarCloud for security checks after each push onto the GitHub repository. I implemented this in 4 microservices, 3 in my own project and 1 in the group-project. To see the CI-job of this action, please click on <a href="https://github.com/Morvie/MovieMicroservice/actions/workflows/sonarcloud.yml">this</a>.
+
+It is a static code analysis tool which checks the code on code-smells as well as possible security issues.
+
+<div align="center">
+  <img src="..\img\DevOps\Security-scanning.png"/>
+</div> 
+
+
+&nbsp;
+
 ---
 
 <h1 id = "Infrastructure">Infrastructure security🛣️</h1>
 
 - Azure database connection is secure by TLS1.2 encryption.
-- Usage of HTTPS in Ingress controller.
+<div align="center">
+  <img src="..\img\Cloud\DB-encryption.png"/>
+</div> 
+
+- Azure firewall security configurations
+<div align="center">
+  <img src="..\img\Cloud\Azure-db-firewall.png"/>
+</div> 
+
+
+- Usage of HTTPS in Ingress controller and services.
+
+<div align="center">
+  <img src="..\img\Cloud\Ingress-https.png"/>
+</div> 
+
+<div align="center">
+  <img src="..\img\Cloud\Service-https.png"/>
+</div> 
+
 - Usage of HTTPS in application.
+
+<div align="center">
+  <img src="..\img\Cloud\Demo-https.png"/>
+</div> 
+
 - Usage of secrets within the pipeline GitHub actions.
+
+
+<div align="center">
+  <img src="..\img\Security\Secrets-GitHub.png"/>
+</div> 
+
+&nbsp;
+
+```yaml
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }} <--Secret
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} <-- Secret
+```
+
 
 &nbsp;
 &nbsp;
@@ -498,6 +571,9 @@ In order to protect the application against bots, who try to create a account wi
   <a>
     <img src="../img/Security/Recaptch-protection.png"/>
   </a>
+    <a>
+    <img src="../img/Security/Recaptch-protection-trigger.png"/>
+  </a>
 </div>
 
 &nbsp;
@@ -519,6 +595,10 @@ As seen below within the keycloak configuration:
   <a>
     <img src="../img/Security/keycloak-password.png"/>
   </a>
+  &nbsp;
+  <a>
+    <img src="../img/Security/keycloak-2FA-trigger.png"/>
+  </a>
 </div>
 
 &nbsp;
@@ -526,9 +606,14 @@ As seen below within the keycloak configuration:
 ## Two Factor Authentication.
 
 <div align="center">
+    <a>
+    <img src="../img/Security/keycloak-2FA-registry.png"/>
+  </a>
+  
   <a>
     <img src="../img/Security/keycloak-2FA.png"/>
   </a>
+
 </div>
 
 The application uses a Two-Factor Authentication to authenticate users with a two factor operation. If the user wants to login, the user needs to fill in its username and password. And once it is succeeded by the application, the two factor authentication gets triggered and the user needs to use the google multifactor authentication mechanism and fill in a once-time code:
@@ -582,6 +667,7 @@ When the service wants to use the JWT token, it uses that token and requests it 
 </div>
 &nbsp;
 
+
 ## OAuth2.0 Authorization.
 
 Keycloak authentication service uses a high-level industry-standard protocol for authorization called: `OAuth2.0`. OAuth2.0 is a secure, open data sharing standards that secures authentication and authorization operations between services without revealing the user's identity or credentials.
@@ -615,15 +701,39 @@ As well as the other, but minor security threats.
   <img src= "../img/Security/ZAP-automated security scan.png">
 </div>
 
-- keycloak monitoring
+&nbsp;
 
-- SQL injection.
+**Manual SQL injection attack**
 
-- Stored XSS .
+I had tested a security threat where the user can place malicious code in order to receive or drop data from the database. Since, i am using an `ORM: Entity Framework` the input gets sanitized and not insert as a query.
 
-- Input validation.
+<div align="center">
+  <img src= "../img/Security/SQL injection in db.png">
+</div>
 
-- Recaptcha.
+<div align="center">
+  <img src= "../img/Security/SQL injection.png">
+</div>
+
+&nbsp;
+
+**Manual Stored XSS**
+
+With the next attack, I wanted to check if it is possible to store a malicious javascript redirect URL. So, I started out with creating the malicious redirect, but it turned out the attack does get stored directly but not executed as a malicious code. But just as text.
+
+<div align="center">
+  <img src= "../img/Security/Stored-XSS.png">
+</div>
+
+&nbsp;
+
+**Recaptcha.**
+
+I wanted to make a account by just clicking the reCAPTCHA validation, and pray that it would not give me a bot-detection alert. I executed this test with Cypress system-test, but it turned out it triggered the reCAPTCHA!
+
+<div align="center">
+  <img src= "..\img\Security\Recaptch-protection-trigger.png">
+</div>
 
 &nbsp;
 &nbsp;
@@ -635,4 +745,3 @@ As well as the other, but minor security threats.
 * https://intellipaat.com/blog/the-cia-triad/#
 * https://www.bmc.com/blogs/cia-security-triad/
 * https://www.techtarget.com/whatis/definition/Confidentiality-integrity-and-availability-CIA#:~:text=In%20this%20context%2C%20confidentiality%20is,the%20information%20by%20authorized%20people.
-* 

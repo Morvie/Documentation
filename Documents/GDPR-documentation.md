@@ -206,8 +206,51 @@ The `Azure|MySQL database` will be used on the cloud environment. Which will aut
 #### Use-case within project.
 My usage within this project would be a `Azure MySQL database`. Within this database it can automatically scale up when needed, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
 
+<h1 id = "Law">GDPR undertaken activities.</h1>
 
-<h1 id = "Distributed system">Distributed system</h1>
+In order to apply the GDPR laws into our system to make it GDPR-proof, the following activities have been undertaken:
+
+* Personal data can be managed by the owner of the data:
+
+
+<div align= "center">
+  <img src="..\img\GDPR\Account console.png"/>
+  The user has once it is logged in into the system to view the options: Personal info, Account security and used applications.
+</div>
+
+&nbsp;
+
+With the option: `Personal info`, the user can view its own personal information of the their account. 
+
+Modify the user attributes (username is not adjustable since it is a unique attribute and not needed for GDPR compliant)
+
+And delete the personal account with all its data, this action is truely irreversible. 
+
+<div align= "center">
+  <img src="..\img\GDPR\Account console - update data.png"/>
+</div>
+
+
+#### Account security
+
+The user can manage the security of their account with login providers, viewing device activity information and signing in information (and configure 2FA). Which is great for the CIA-triad requirements.
+
+<div align= "center">
+  <img src="..\img\GDPR\Account console-Devices.png"/>
+</div>
+<div align= "center">
+  <img src="..\img\GDPR\Account console-Signings.png"/>
+</div>
+
+The accounts are not visible for the administrators of keycloak, and thus within the requirements of GDPR. Example given:
+
+<div align= "center">
+  <img src="..\img\Security\Keycloak-John-Adminconsole.png"/>
+This is the view of the administrator, it only has view over the events, realm-settings and current sessions. But it can not create any users or view users.
+</div>
+
+
+<h1 id = "Distributed system">Scalable distributed enterprise system</h1>
 
 For this project, I build two microservices on a CQRS code pattern. This is pattern which divide the application in two different services as `READ-operations` and `WRITE-operations`. 
 
@@ -223,6 +266,9 @@ The disadvantage of using CQRS is that it makes the application harder to unders
 
 Used Messaging.
 --> behouden van berichten en intercommunicatie tussen writer en receiver.
+
+Within the pro
+
 
 Elk microservice heeft eigen database.
 

@@ -306,6 +306,10 @@ Otherwise, the applications that are connected to this database will not receive
 
 &nbsp;
 
+<div align = center>
+  <img src="../img/Cloud/Azure-database-feed.png"></a>
+</div>
+
 
 ## Creating a Kubernetes manifest file.
 
@@ -426,6 +430,20 @@ And if everything went as smootly and optional, the Kubernetes cluster should co
 </div>
 
 
+## Demostration of cloud-hosted services
+
+Here is one of my Azure cloud-hosted services that is demostrated for its working purpose!
+
+<div align = center>
+  <img src="../img/Cloud/Demo-https.png"></a>
+</div>
+
+<div align = center>
+  <img src="../img/Cloud/Service-https.png"></a>
+</div>
+
+
+
 ---
 
 ## Logging and monitoring
@@ -441,11 +459,24 @@ When using Azure, the cloud provider comes with a in-build monitoring tool that 
 </div>
 
 
-#### Server and Network load.
+#### Loadtesting | Server and Network load. 
 
 <div align = center>
   <img src="../img/Cloud/Kubernetes-Cluster-monitoring.png"></a>
 </div>
+
+With the tool `K6`, I managed to load test the application to tests it scalabillity. The result of K6 looked like this without any scaling:
+
+<div align = center>
+  <img src="..\img\Tests\Grafana-LoadTests_GET.png"></a>
+  
+
+</div>
+
+Tested with `2k users ` as mentioned non-functional requirement, I wanted to test the application speed of a HTTP-request. Ideally it would take under 0.5 secondes to complete the request with those number of users:
+
+And within this test it did complete in: 
+
 
 <br/>
 
