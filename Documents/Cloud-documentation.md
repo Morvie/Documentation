@@ -317,6 +317,7 @@ I have created a manifest file in which contains all items that is needed to dep
 - Deployment file.
 - Service file
 - Ingress file.
+- Autoscaler file.
 
 All these files have their own purpose, in which I will explain shortly what their purpose is. And how these files contribute to the cloud-deployment. 
 
@@ -364,6 +365,31 @@ The deployment file is basically a configurations file that contains a few confi
 - **Port** With the port defined, the Ingress controller and application gets appointed to the right port. With port:`443` we can activate the TLS connection for the application.
 
 - **Resources** The resources define the limit of using computing resources of the server. With CPU and RAM memory being as metrics units, the hosting gets limited to optimize the performance, eror-handling and network resources of the application as well for the server.
+
+---
+
+### Kubernetes | Autoscaler file
+
+``` yml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: feeds-api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: feeds-api
+  minReplicas: 1
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 75
+status:
+  currentCPUUtilizationPercentage: 0
+  currentReplicas: 1
+  desiredReplicas: 1
+```
+
+This is the horizontal autoscaler of Kubernetes. It's purpose is to automatically scale up when the current pod gets overloaded by 75% CPU usage that was assigned earlier in the `deployment-file`. And automatically replicates itself until a max of eight pod replicas.
 
 ---
 
@@ -428,6 +454,7 @@ And if everything went as smootly and optional, the Kubernetes cluster should co
 <div align = center>
   <img src="../img/Cloud/Azure-services.png"></a>
 </div>
+
 
 
 ## Demostration of cloud-hosted services
