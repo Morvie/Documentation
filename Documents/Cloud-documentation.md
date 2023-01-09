@@ -475,7 +475,17 @@ With the tool `K6`, I managed to load test the application to tests it scalabill
 
 Tested with `2k users ` as mentioned non-functional requirement, I wanted to test the application speed of a HTTP-request. Ideally it would take under 0.5 secondes to complete the request with those number of users:
 
-And within this test it did complete in: 
+And within this test it did complete on average for `95% in 0.502 seconds` which is great for using the autoscaler. 
+
+
+<div align = "center">
+  <img src="..\img\Cloud\Autoscaler_Load_GET.png">
+  It started using more resources, and also started to scale up the usage of pods with its autoscaler.
+</div>
+
+&nbsp;
+
+And then I decided to test the `POST-request `of the application, and started with testing the POST:
 
 
 <br/>

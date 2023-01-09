@@ -56,17 +56,19 @@
 
 Morvie as the application holds several data topics. These topics are personal data, movie data and user input data (such as user given reviews and ratings). So, this will explain what will be done with the personal data of our customers.
 
-`Personal data` gets collected by the application in order to make it run operations. Only the username, password and a unique email address is required to create a personal account. And with the personal account the user would be able to create a feed within the forums about a movie. So, at registry the application will create a unique personal identifier so that the application can use this identifier to allocate the forums with the correct account. The email of the user will be used to make sure that the user can login and/or can perform a 'forgot my password' recovery whenever the user forgot this (possibility in the near future as a feature). And thus can recover the account. 
+`Personal data` gets collected by the application in order to make it run operations. Only the `username, password, name and a unique email address` is required to create a personal account. And with the personal account the user would be able to create a feed within the forums about a movie. So, at registry the application will create a unique personal identifier so that the application can use this identifier to allocate the forums with the correct account. The email of the user will be used to make sure that the user can login and/or can perform a 'forgot my password' recovery whenever the user forgot this (possibility in the near future as a feature). And thus can recover the account. Also uses it called: `metadata` which will be used to prevent harm to the account. This is encrypted and hashed to prevent vulnerabilities:
+
+<img src = "..\img\Security\Keycloak-encryption.png">
+<img src = "..\img\Security\OTP policy .png">
+
+The operators of morvie can not see the personal information of the user since `keycloak` user management service has the access control configured to not been able to see any user information.
+
+The authentication service and the morvie application share a `single connection`. And that is when the user wants to login into the morvie system. Which is secure by a secure connection: `HTTPS` which is configured in this application.
+
+<img src= "..\img\Security\Keycloak-RequirementForSSL.png">
 
 
-
-The operators of morvie can not see the personal information of the user since `keycloak` user management service uses a plugin that encrypts the personal information of the user. It is called `Secure Credentials Store - Vault SPI`. And by user roles only limited operators can access the encrypted personal information for development purposes and are qualified for accessing this section. 
-
-The authentication service and the morvie application share a `single connection`. And that is when the user wants to login into the morvie system. Which is secure by a secure connection: `HTTPS`. And uses the secure way of authenticating: `OAuth2.0` in which the authentication service lets the user directly communicate with the authentication service for a token. And once it is valid, the user will receive a heavy encrypted by `RS456` token that contains an access and authorization-token. In which the user can perform operations. 
-
-<div align = center>
-    <img src = "https://miro.medium.com/max/808/1*1McvnvrW6wh37ECYpmTSxw.png">
-</div>
+And uses the secure way of authenticating: `OAuth2.0` in which the authentication service lets the user directly communicate with the authentication service for a token. And once it is valid, the user will receive a heavy encrypted by `RS456` token that contains an access and authorization-token. In which the user can perform operations. 
 
 &nbsp;
 &nbsp;
@@ -262,25 +264,45 @@ And also can the application use the benefits of SQL and NoSQL databases since S
 
 The disadvantage of using CQRS is that it makes the application harder to understand and maintain. This could trouble future updates and maintainance on the application.
 
+---
+### Messaging.
 
+During the development of the scalabillity applications, I used the technique: `messaging`. With messaging, the application is able to make asyncrounous communications between eachother.
 
-Used Messaging.
---> behouden van berichten en intercommunicatie tussen writer en receiver.
-
-Within the pro
-
-
-Elk microservice heeft eigen database.
-
-Kubernetes autoscale the docker container by certain percentage and scale up the pods horizontal
+So, after a research I decided to use `RabbitMQ` with `MassTransit` and make a Proof-of-concept for my application with a `Producer` and a `Consumer`:
 
 
 
+The `feeds-microservice` is my Producer: 
 
+<img src="..\img\MessageBroker\RMQ-ProducerListening.png">
+
+And the Consumer is the `forums-microservice`:
+
+<img src="..\img\MessageBroker\RMQ-ConsumerListening.png">
+
+
+With an active session in rabbitMQ, I was able to see both of the microservices listed as active connection and ready to do work:
+
+<img src="..\img\MessageBroker\RMQ-Connections.png">
+
+So, I sent a message from the producer to the consumer after I posted a test message:
+
+<img src="..\img\MessageBroker\RMQ-Producer.png">
+
+In which the `forumid` will be sent to the messagequeue:
+
+<img src="..\img\MessageBroker\RMQ-QueuedMessage.png">
+
+And almost instantly, the consumer picks up the produced message by the producer from the queue and will it take in its own application: 
+
+<img src="..\img\MessageBroker\RMQ-Received-Message.png">
+
+The advantage of using Messaging properly is that `confidential` data won't get lost when the message fails. It will be stored in the message bus and wait for the service to come back online again. So, it will cover the `Availabillity of the CIA-triad`.
 
 <h1 id = "Observability tools">🔧 Observability tools</h1>
 
-Grafana scalable loading
+<img src="">
 
 Keycloak user data modification.
 

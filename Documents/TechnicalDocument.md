@@ -164,3 +164,42 @@ Once at the gateway, the gateway service receives the JWT token and retrieves th
 <div align="center">
     <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/Level2%5BContainer%20diagram%5D.png" title="Level 2" alt="Level 2" width="450" height=""/>&nbsp;
 </div>
+
+
+# Visualizations of the system.
+
+<div align="center">
+    <img src="..\img\Application\Keycloak login.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-Home.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-Movie.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-Detailed.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-Thread.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-Form.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Frontend-FormSuccess.png"/>&nbsp;
+</div>
+
+<div align="center">
+    <img src="..\img\Application\Docker-services.png"/>&nbsp;
+</div>
+
+
+
+
