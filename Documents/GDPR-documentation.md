@@ -221,13 +221,13 @@ Within the project, I have decided to choose the following databases:
 - `Azure(MySQL) database`: Which runs on Azure Cloud environment.
 - `InfluxDB database`: Which will capture timeseries data from the performed Loadtesting.
 
-With these chosen databases, I will explain which parts the database system will cover of the CPA theormen. Both of these databases will cover the CA parts of the CPA theorm. And will I give my motivation why I chose these database providers.
+With these chosen databases, I will explain which parts the database system will cover of the CAP theormen. Both of these databases will cover the CA parts of the CAP theorm. And will I give my motivation why I chose these database providers.
 
 ### Usage of Microsoft SQL Database.
 
 ---
 
-With `MSSQL` database, the feature always on is enabled on the local development environment. It is a relational database which means it has the abillity to cover the two-factors of the CPA-theorm `Consistency` and `Availability`.
+With `MSSQL` database, the feature always on is enabled on the local development environment. It is a relational database which means it has the abillity to cover the two-factors of the CAP-theorm `Consistency` and `Availability`.
 Since I am using a forum application, I wanted to have a `data-requirement` of users having the latest written data. Which can be shown with the usage of relational database with `Consistency`. 
 
 Also a reason, I chose the microsoft sql database is because of the usage of an `Object Relation Mapper (ORM)`. Which the application uses to access the data from the database, build with `Entity Framework`, an tool made by Microsoft for relational databases. This tool can be used with all providers in relational databases.
@@ -266,7 +266,6 @@ The server has built-in support for different databases. You can query the avail
 
 
 So, I decided to go with PostgreSQL. I noted that these databases are all relational so, I wanted to know why this was the case. And it seems that keycloak wants to have a `Consistency requirement` on their database, so the users can view the lastest written data available. And the main reason for chosing Postgres is that it has a strong reputation for its reliability, data integrity(UNIQUE, PK, FK). And for my own learning purpose, since I don't have any experience with this relational database provider.
-&nbsp;
 
 ---
 
@@ -276,10 +275,39 @@ The `Azure| MySQL database` will be used on the cloud environment. Which will au
 
 I used the Azure database service for hosting a cloud database provider that will store the data and handle it strictly. Azure database which uses primarly `MySQL` database, will take this job.
 
-The main advantage, I have with having a MySQL database over other relational database providers is the fact that MySQL is known for its `speed prioritaztion`. In benchmark tests it came close with Postgresql but still holds the reputation for a exceedingly fast database solution.
+The main advantage, I have with having a MySQL database over other relational database providers is the fact that MySQL is known for its `speed prioritaztion`. In benchmark tests it came close with Postgresql but still holds the reputation for a exceedingly fast database solution. The Azure MySQL database can automatically scale up when needed `vertically` and `horizontally`, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
 
-#### Use-case within project.
-My usage within this project would be a `Azure MySQL database`. Within this database it can automatically scale up when needed, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
+As I use my Azure database with the `serverless compute tier` mode, it billed me only for the compute costs and storage.
+
+<div align="center">
+  <img src = "..\img\GDPR\Azure-Serverless.png">
+  It only charges me cost of the usage of the vCores during the database usage.
+</div>
+
+&nbsp;
+
+In order to apply this context to my project, my cost-monitoring looks like this:
+
+<div align="center">
+  <img src = "..\img\GDPR\Azure-monitoring.png">
+  It only charges me cost of the used vCores during the database usage.
+</div>
+
+
+
+
+---
+
+### Usage of Influx Time-series database.
+
+Within this project, I wanted to make a observation-tool to see the load-test into a `Grafana` dashboard. In order to accomplish this, I used Influx DB to complete this task. Influx DB is not something new for me since I heavily used it during my previous internship. 
+
+Influx DB is a time-series database in where the timestamp is the identifier over data. It maps the metric during over each second in order to create a time-series, which can be used in order to create graphs and plot diagrams.
+
+I host it locally since this is a development tool. It can be hosted on a server in order to measure 24/7 over metrics data. But for load-testing this is not recommended since it can overload the server. The main reason to choose this tool is that it is open-source, has a great integrity with Grafana as tool and I did already have experience with this database provider.
+
+<img src = "..\img\GDPR\InfluxDB.png"/>
+
 
 
 <h1 id = "Law">GDPR undertaken activities.</h1>
@@ -287,6 +315,11 @@ My usage within this project would be a `Azure MySQL database`. Within this data
 In order to apply the GDPR laws into our system to make it GDPR-proof, the following activities have been undertaken:
 
 * Personal data can be managed by the owner of the data:
+
+
+### Counterpart of using Relational databases.
+
+When using Relational databases primarly for this application the Partion tollerance type of databases where not used. However for the future expansion I might consider using this type of databases, such as `MongoDB` and `Cassandra` which are NoSQL databases. Why? The reason behind this has to do with `scalability and application up-time.`
 
 ### Regular Backups of data 
 
@@ -360,13 +393,74 @@ The advantage of using Messaging properly is that `confidential` data won't get 
 
 <h1 id = "Observability tools">🔧 Observability tools</h1>
 
-<img src="">
+### Azure | Server and Pod monitoring
 
-Keycloak user data modification.
+In order to see the logs within the pods of my Cloud hosting, I used Azure pod logging. This gives me the ability to monitor the logs on possible error-messages within the pod:
 
-Keycloak session usage
 
-Keycloak session monitoring.
+
+<div align="center">
+<img src="..\img\Cloud\Azure-pod-logging.png"/>
+In order to see logs errors, I went to the pod and see the live-pod logs.
+</div>
+
+&nbsp;
+
+<div align="center">
+<img src="..\img\Cloud\Azure-pod-events.png">
+And pod event status as well
+</div>
+
+&nbsp;
+
+<div align="center">
+<img src="..\img\Cloud\Kubernetes-Cluster-monitoring.png">
+To be able to see the health over the Kubernetes cluster on Azure, I could filter the metrics into <code>Node pool (CPU usage)</code>, <code>Node pool (memory usage)</code>, <code>Node pool network out</code> and as seen on the image above. This enables to give developers the opportunity to perform actions when the cluster is spiking.
+</div>
+
+---
+
+### Keycloak | Logging
+
+By default, this feature is disabled. So, I had to configure this setting within the keycloak configuration menu. So, I wanted to have the ability to view error logging and performance monitoring within the keycloak administration console. 
+
+To be able to monitor the users actions of the administrators, I have added this event-console:
+
+<img src="..\img\GDPR\Keycloak-Events.png"/>
+<img src="..\img\GDPR\Keycloak-Events-Admin.png"/>
+
+---
+
+### Grafana | Load-test
+
+In order to view metrics by an Obeservability tool, I used Grafana to view to load-tests. Grafana is an open-source tool that plots metrics into graphs. It will be used in combination with Influx Time-series database. I used Grafana because I also use `K6-load testing` which is also from the Grafana organization. So, it has optimized performance and integration.
+
+In order to set this is up is by using the Grafana docker image. Which I received by getting `Docker-compose`. 
+
+```YAML
+ grafana:
+    image: grafana/grafana:latest
+#    entrypoint: /bin/sh
+#    user: root
+    networks:
+      - grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    volumes:
+      - ./dashboards:/var/lib/grafana/dashboards
+      - ./grafana-dashboard.yaml:/etc/grafana/provisioning/dadshboards/dashboard.yaml
+      - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+```
+With the volume, I added the dashboard configuration provided as default template from Grafana. 
+
+And after performing the load test, I get to see passively the performance about the load-test which is receiving HTTP information about the performed load-test:
+
+<img src="..\img\Tests\Grafana-LoadTests_GET.png"/>
 
 ---
 

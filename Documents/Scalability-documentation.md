@@ -70,6 +70,15 @@ So, the application structure gets divided into two separate structures: a comma
 Combined with the benefits of SQL and NoSQL databases, the application can rapidly perform actions to the NoSQL database. And receive data from the SQL database. In between the databases can communicate through an Event handler or synchronization. 
 
 
+## Advantage of using CQRS and MediatR.
+
+In order to apply CQRS-pattern into a microservice application the segration between the `READ` and `OPERATIONS` needed to be segregated. Thus different service and repository layers. 
+
+I did this by installing the framework: `MediatoR` which is a framework that enables .NET-build application to be built with a CQRS-pattern. The advantage of this framework is that the operations becomes `Single Responsibility` which is great for executing operations and maintaining the application in the future. And it enables notifications mechanism which is usefull for domain events on the architecture. The request will only pass by one single handler as where the notification mechanism by Mediatr will be passed by all registered handlers. As well for getting results which notifcations does not allow it, but request will.
+
+
+
+
 ## Sources:
 * CQRS pattern - Azure Architecture Center*. (z.d.). Microsoft Learn. Geraadpleegd op 10 oktober 2022, van <https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs>
 
@@ -87,3 +96,6 @@ Combined with the benefits of SQL and NoSQL databases, the application can rapid
 * SentinelOne | SQL vs NoSQL Performance: Where One Outperforms the Other. (2022, February 16). SentinelOne. Retrieved October 5, 2022, from https://www.sentinelone.com/blog/sql-vs-nosql-performance/
  
 
+* Partech | CQRS pattern in C-sharp (May 2021) https://www.partech.nl/nl/publicaties/2021/05/using-the-cqrs-pattern-in-c-sharp#
+
+* CodeProject | Ivan Yakimov (15 November, 2021) https://www.codeproject.com/Articles/5317666/Why-Do-We-Need-MediatR#:~:text=MediatR%20provides%20you%20with%20other,must%20implement%20INotification%20marker%20interface.
