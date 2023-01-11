@@ -39,10 +39,9 @@
     <li><a href="#Observability tools"> ➤ Observability tools.</a></li>
   </ol>
 </details>
-<br/>
 
 &nbsp;
-&nbsp;
+
 
 <h1 id = "GDPR and Data comlexity">🔏 GDPR and Data complexities</h1>
 
@@ -61,17 +60,9 @@ Morvie as the application holds several data topics. These topics are personal d
 <img src = "..\img\Security\Keycloak-encryption.png">
 <img src = "..\img\Security\OTP policy .png">
 
-The operators of morvie can not see the personal information of the user since `keycloak` user management service has the access control configured to not been able to see any user information.
+The operators of morvie can not see the personal information of the user since `keycloak` user management service has the access control configured to not been able to see any user information. And all user-data processing activities will be recorded under the Event section of Keycloak, which holds uneditedable information about the data processing activities. 
 
-The authentication service and the morvie application share a `single connection`. And that is when the user wants to login into the morvie system. Which is secure by a secure connection: `HTTPS` which is configured in this application.
-
-<img src= "..\img\Security\Keycloak-RequirementForSSL.png">
-
-
-And uses the secure way of authenticating: `OAuth2.0` in which the authentication service lets the user directly communicate with the authentication service for a token. And once it is valid, the user will receive a heavy encrypted by `RS456` token that contains an access and authorization-token. In which the user can perform operations. 
-
-&nbsp;
-&nbsp;
+<img src= "..\img\GDPR\Keycloak-Events.png">
 
 The personal data, storage location, usage of the data and duration of holding this data is important to be explained. Within the table below, this will bee explained. Thereby, I hope to inform the usage of the personal data within this application.
 
@@ -135,12 +126,24 @@ Within the user registery form, there will be a `clear` and `big` text box in wh
 
 ## 2 - Data security
 
+In order to maintain the security of data, I applied the CIA-triad requirements as well for data usage. Within this application data get secured by using an encrypted transit over `HTTPS`. Which is to be configured for every keycloak action that needs to be performed. To enable `HTTPS`, I had to go to the settings and enable HTTPS for all requests.
 
+<img src= "..\img\Security\Keycloak-RequirementForSSL.png">
+
+Another thing I did to mainstain data security, is to encrypt user data. I did it by using `encryption` and `hashing iterations`. The used encryption to encrypt user information is: `pbkdf2-sha256` and the used hashing iterations are: `27500`. Which should users protect their information against `rainbow-table attacks`. As seen in the image below on the configurations:
+
+<img src= "..\img\Security\Keycloak-encryption.png">
+<img src= "..\img\Security\Keycloak-password.png">
+
+There is also being a internal security policy for the keycloak users. And this is by using a two-factor authentication mechanism in order to protect the account of the individual. To enable the two-factor authentication, the user has it freedom to share the device-id in order to secure itselves against possible attacks.
+
+<img src= "..\img\Security\Keycloak-2FA-registry.png">
+
+This can be found within the account configuration console, where the user can set up the 2FA and see the latest log in attempts:
+
+<img src= "..\img\GDPR\Account console-Signings.png">
 
 ---
-
-&nbsp;
-&nbsp;
 
 ## 3 - Accountability and governance
 
@@ -160,7 +163,6 @@ With using a cloud provider which does the hosting and infrastructure of "Morvie
 The current reponsible person over ensuring the GDPR compliance accros the organization is the `developer: Mark Goertz`. And will be reponsible for creating awareness to the new members of the organization and will the desicion makers be informed about the data protection legislation.
 
 &nbsp;
-&nbsp;
 
 ## 4 - Privacy rights
 
@@ -168,11 +170,29 @@ The current reponsible person over ensuring the GDPR compliance accros the organ
 * GDPR Article 16 – Right to rectification
 ---
 
-When the user what to access its personal information it can send a email to `Data Protection Officer`. Or fill in a GDPR form (which is currently not going to be implemented) and create a ticket to the Data protection officer. This person will prepare the personal information and send this to the person who requested the form.
+In order to give the user the right to view it information, it must first be logged in. Once the user is logged in, the user has the availabillity to view its data. This can be performed by clicking on their username in page of Morvie:
 
-The person is currently not able to modify the personal information on its own. But this can be implemented in which the user will communicate directly to the backend service that processes this action. And the data will be `end-to-end encryption` so it becomes not readable.
+<div align = "center">
+<img src= "..\img\Application\Frontend-Home.png">
+In this case by clicking on John Doe.
+</div>
 
-As well as the option to delete the personal information. This is currently been done by the DPO on request.
+When the user clicked on this name, it will get redirected to the `account console`. Where they will see three options: 
+* Personal Info
+* Account security
+* Applications.
+
+<div align = "center">
+<img src= "..\img\GDPR\Account console.png">
+</div>
+
+On the Personal Info page, the user will be able to see its personal information of name, username and email. This data can easily be modified (except for username since this needs to be unique). But also to be removed from the application, and thus choose not be a user anymore.
+
+<div align = "center">
+<img src= "..\img\GDPR\Account console - update data.png">
+</div>
+
+
 &nbsp;
 
 
@@ -197,16 +217,70 @@ The selection above describe the guarantees that you can promise to the users. B
 #### Choice within the project.
 Within the project, I have decided to choose the following databases:
 - `MSSQL database`: which runs on Docker.
+- `PostgreSQL database`: which runs on Docker.
 - `Azure(MySQL) database`: Which runs on Azure Cloud environment.
+- `InfluxDB database`: Which will capture timeseries data from the performed Loadtesting.
 
-With these chosen databases, I will explain which parts the database system will cover of the CPA theormen. Both of these databases will cover the CA parts of the CPA theorem, since it is only possible to cover two out of the three parts. With `Consistency` and `Availability` covered. The database system will write a high volume of data with a high accuracy. And will it load replicate itselves when the load gets too much. 
+With these chosen databases, I will explain which parts the database system will cover of the CPA theormen. Both of these databases will cover the CA parts of the CPA theorm. And will I give my motivation why I chose these database providers.
 
-With `MSSQL` database, the feature `always on` is enabled on the local development environment. And can automatically perform availability. 
+### Usage of Microsoft SQL Database.
 
-The `Azure|MySQL database` will be used on the cloud environment. Which will automatically scale up by Azure services when needed. This brings an addional server usage costs, but it only charges only what the company requires.
+---
+
+With `MSSQL` database, the feature always on is enabled on the local development environment. It is a relational database which means it has the abillity to cover the two-factors of the CPA-theorm `Consistency` and `Availability`.
+Since I am using a forum application, I wanted to have a `data-requirement` of users having the latest written data. Which can be shown with the usage of relational database with `Consistency`. 
+
+Also a reason, I chose the microsoft sql database is because of the usage of an `Object Relation Mapper (ORM)`. Which the application uses to access the data from the database, build with `Entity Framework`, an tool made by Microsoft for relational databases. This tool can be used with all providers in relational databases.
+
+This database gets to be used within the development database of this application, thus serve as Docker containers for the microservices:
+`Feeds and Forums.`
+
+<div align = "center">
+  <img src = "..\img\GDPR\Usage of microsoft database.png">
+</div>
+
+&nbsp;
+
+---
+
+### Usage of PostgreSQL database
+
+Within the keycloak service in this application, I have to store safely in order to make use of user and configuration data storage. To make sure I chose the right database, I looked up at the documentation of keycloak and it stated the following information:
+
+```YML
+Configuring the database
+
+An overview about how to configure relational databases
+This guide explains how to configure the Keycloak server to store data in a relational database.
+
+Supported databases
+
+The server has built-in support for different databases. You can query the available databases by viewing the expected values for the db configuration option. The following table lists the supported databases and their tested versions.
+
+```
+* mariadb version 10
+* mssql | 2016
+* mysql | 8
+* oracle | 12c
+* postgres | 10
+
+
+So, I decided to go with PostgreSQL. I noted that these databases are all relational so, I wanted to know why this was the case. And it seems that keycloak wants to have a `Consistency requirement` on their database, so the users can view the lastest written data available. And the main reason for chosing Postgres is that it has a strong reputation for its reliability, data integrity(UNIQUE, PK, FK). And for my own learning purpose, since I don't have any experience with this relational database provider.
+&nbsp;
+
+---
+
+### Usage of Azure Cloud database.
+
+The `Azure| MySQL database` will be used on the cloud environment. Which will automatically scale up by Azure services when needed. This brings an addional server usage costs, but it only charges only what the company requires.
+
+I used the Azure database service for hosting a cloud database provider that will store the data and handle it strictly. Azure database which uses primarly `MySQL` database, will take this job.
+
+The main advantage, I have with having a MySQL database over other relational database providers is the fact that MySQL is known for its `speed prioritaztion`. In benchmark tests it came close with Postgresql but still holds the reputation for a exceedingly fast database solution.
 
 #### Use-case within project.
 My usage within this project would be a `Azure MySQL database`. Within this database it can automatically scale up when needed, and the availability is promised by Azure by `99.95%` in a year. That is `4,38 hours downtime` of a whole year.
+
 
 <h1 id = "Law">GDPR undertaken activities.</h1>
 
@@ -214,9 +288,13 @@ In order to apply the GDPR laws into our system to make it GDPR-proof, the follo
 
 * Personal data can be managed by the owner of the data:
 
+### Regular Backups of data 
+
+Within the database of Azure SQL database, I checked a 
+
 
 <div align= "center">
-  <img src="..\img\GDPR\Account console.png"/>
+  <img src="..\img\GDPR\Account console-Devices.png"/>
   The user has once it is logged in into the system to view the options: Personal info, Account security and used applications.
 </div>
 
@@ -231,26 +309,6 @@ And delete the personal account with all its data, this action is truely irrever
 <div align= "center">
   <img src="..\img\GDPR\Account console - update data.png"/>
 </div>
-
-
-#### Account security
-
-The user can manage the security of their account with login providers, viewing device activity information and signing in information (and configure 2FA). Which is great for the CIA-triad requirements.
-
-<div align= "center">
-  <img src="..\img\GDPR\Account console-Devices.png"/>
-</div>
-<div align= "center">
-  <img src="..\img\GDPR\Account console-Signings.png"/>
-</div>
-
-The accounts are not visible for the administrators of keycloak, and thus within the requirements of GDPR. Example given:
-
-<div align= "center">
-  <img src="..\img\Security\Keycloak-John-Adminconsole.png"/>
-This is the view of the administrator, it only has view over the events, realm-settings and current sessions. But it can not create any users or view users.
-</div>
-
 
 <h1 id = "Distributed system">Scalable distributed enterprise system</h1>
 
@@ -323,3 +381,5 @@ Keycloak session monitoring.
 - What is the CIA Triad? Definition, Importance & Examples. (2022, 8 oktober). SecurityScorecard. https://securityscorecard.com/blog/what-is-the-cia-triad
 
 - Savjani, S. (2022, 29 november). Hoge beschikbaarheid - Azure Database for MySQL. Microsoft Learn. https://learn.microsoft.com/nl-nl/azure/mysql/single-server/concepts-high-availability
+
+- Digital Ocean (2022, https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems

@@ -1,4 +1,4 @@
-﻿# Scalability research.
+﻿# CQRS and Scalability research.
 
 ## Differences between SQL and NoSQL databases in scalability.
 

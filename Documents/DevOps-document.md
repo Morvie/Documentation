@@ -406,6 +406,8 @@ env:
     CONTAINER_NAME: feedms-image
     DEPLOYMENT_MANIFEST_PATH: |
         ./k8s/deploy.yml
+        ./k8s/service.yml
+        ./k8s/autoscaler.yml
 jobs:
     buildImage:
         permissions:
