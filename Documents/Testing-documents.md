@@ -576,17 +576,23 @@ So, in order to perform this load-testing, I have set-up the environment with K6
 
 <div align = "center">
     <img src = "..\img\Tests\Grafana-LoadTests_GET.png">
-    Performed the load-testing with POST operation. I looked up for the metrics and the metrics shown. This is a performed load-testing without the Kubernetes non-scalable architecture.
-    <br/>
-    <br/>
-    <img src = "..\img\Tests\Grafana-LoadTests_POST-autoscaler.png">
-    This task is performed with Kubernetes autoscaler on. Which enables the application to scale up horizontally and spread the load over the different pods.
+    I performed the above test with GET operations. It uses 2k users and it executed the test 95% of the 0,5 seconds within these seconds.
     <img src = "..\img\Cloud\Autoscaler_Load_GET.png">
+     And as you can see, the application handles the load but does not correct itselves.
+    <br/>
+    <br/>
+    <img src = "..\img\Tests\Grafana_Load_POST_Nonscaled.png">
+    This task is performed with Kubernetes autoscaler on. Which enables the application to scale up horizontally and spread the load over the different pods. And as you can see, the application beings to scale down within the metrics. But due to the <code>rate limiter</code> on my private network at home, it scales up since it can not handle the HTTP request. So, that also the reason I had to test with 10k users. 
+
 </div>
 
 &nbsp;
 
-Within this results it is shown that the POST operations where performed on a non-scaled Kubernetes architecture and on a scaled Kubernetes architecture with autoscaler up to `eight` pods. Which we can see that 95% of the requests are succeeded within 85 milliseconds.
+<div align = "center">
+<img src = "..\img\Tests\Load-test_POD-scaling.png">
+With this usage of Azure, I could monitor the pods scale up from 9 to 20 pods. So, the autoscaler is working!
+</div>
+
 
 ---
 

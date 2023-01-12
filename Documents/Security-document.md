@@ -33,9 +33,10 @@
   <ol>
     <li><a href="#OWASP"> ➤ OWASP Top 10</a></li>
     <li><a href="#CIA"> ➤ CIA-Model</a></li>
-    <li><a href="#Keycloak"> ➤ Keycloak authentication manager</a></li> 
+    <li><a href="#Access management"> ➤ Keycloak authentication manager</a></li> 
     <li><a href="#GitHub actions"> ➤ GitHub actions security</a></li>
     <li><a href="#Infrastructure"> ➤ Infrastructure security</a></li>
+    <li><a href="#Keycloak"> ➤ Keycloak security actions.</a></li>
     <li><a href="#Security tests"> ➤ Security tests</a></li>
   </ol>
 </details>

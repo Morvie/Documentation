@@ -57,10 +57,7 @@ The reader will receive a generic overview over the made components. Furthermore
 
 # :hammer_and_wrench: Programming languages and tools :
 
-
 &nbsp;
-&nbsp;
-
 
 ## Back-end
 
@@ -159,10 +156,24 @@ This component of the application separates the front-end with the back-end comp
 This service communicates two ways, front-end and back-end wise. The way this service works is that the front-end requests to validate the given user credentials. The service validates the given user credentials and give back an access token through JWT-tokens. And let the frond-end communicate directly to the gateway.
 
 
-Once at the gateway, the gateway service receives the JWT token and retrieves the access token out of it through a special decoding encryption. And communicates with the keycloak service to validate the access token. Once its is validated successfully, the response becomes a token that is usable and gets access to the authentication schemes. Which also comes with authrozation limitations. This way of communication is called: *OAuth2.0*
+Once at the gateway, the gateway service receives the JWT token and retrieves the access token out of it through a special decoding encryption. And communicates with the keycloak service to validate the access token. Once its is validated successfully, the response becomes a token that is usable and gets access to the authentication schemes. Which also comes with authrozation limitations. This way of communication is called: *OpenID-connect*
 
 <div align="center">
     <img src="https://raw.githubusercontent.com/Morvie/Documentation/main/img/Level2%5BContainer%20diagram%5D.png" title="Level 2" alt="Level 2" width="450" height=""/>&nbsp;
+</div>
+
+## Level 3: [Component overview]
+
+Within the Morvie application the following the system is getting split in multiple components that support as one system. Below there will be explained what containers this system contains:
+
+So, in order to attribute the system into a micro-service style, the backend gets seperated into multiple components and databases per service. This improves performance, scalability and uptime since the components are separated from each other. 
+
+As well as using independently databases, which each database can have its own needs. If the microservice performs much write-operations over read-operations, then a NoSQL database fits better than user relationl databases.
+
+
+
+<div align="center">
+    <img src="..\img\Level3[Component-diagram].png" title="Level 3" alt="Level 2" width="450" height=""/>&nbsp;
 </div>
 
 
