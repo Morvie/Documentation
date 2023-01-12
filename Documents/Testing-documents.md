@@ -214,42 +214,6 @@
 
 ---
 
-<table>
-    <tr>
-        <th>
-            <h3 align = "center"> Others. | Codecov</h4>
-        </th>
-    </tr>
-    <tr>
-        <th><div align="center">
-            <img src=https://about.codecov.io/wp-content/themes/codecov/assets/brand/logos/codecov.svg" width="200">
-            </div>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            <p><div align="center">This is a <code>Automated security</code> testing tool.</p></div>
-        </th>
-    </tr>
-    <tr>
-        <th><div align="center">
-            <p>Motivation:</p>
-            <p>The main reason this testing framework was chosen over alternatives such as: <code>MS Test</code> or <code>NUnit</code> was due to the fact to the following points:</p> 
-            </div>
-            <ol>
-                <li><code>Open-source:</code> Like other framework options this framework is open-source. </li>
-                <li><code>Single Object Instance per test method:</code> This means that test-methods are isolated. Whether the tests are being executed, the state of the application e.g. variables gets reset to the original state in order to prevent failed tests by other tests.</li>
-                <li>
-                    <code>No [SetUp] is required:</code> Within this framework, no setup is required before executing the written tests.
-                </li>
-            </ol>
-            <p> The main reason of my choice of using xUnit is due to its flexibility.</p>
-        </th>
-    </tr>
-</table>
-
----
-
 Before I continue on giving the test-results, based on the level from code to the whole picture. It is important to understand that some test can be fully automated and some need to be fully configured. And with the following tests, I integrated all these tests and some more.
 
 `And it is important to know that all tests are integrated within the CI-pipeline` so, this means that once a push in main-branch all tests will be triggered!
