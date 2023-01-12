@@ -1,3 +1,4 @@
+
 ---
 <a name="readme-top"></a>
 
@@ -22,6 +23,7 @@
 <a href="https://github.com/Morvie/Documentation/issues">Report Bug</a>
 </p>
 </div>
+
 ---
 
 <!-- TABLE OF CONTENTS -->
@@ -428,18 +430,96 @@ So, one of the testsis a POST test I have performed, which will check for:
 - Body matches with string as response.
 
 <div align="center">
-<img src="..\img\Tests\Functional-Test.png
-">
+<img src="..\img\Tests\Functional-test.png">
 </div>
 
 ---
 
 ### System/End-to-end tests
 
+With the system tests, I want to check whether the system operates correctly as responding within the requirements. The system test (similar to end-to-end tests, but not the same!) will execute a manually written test by the developer and check if the system does execute the workflow correctly accoding to the test.
 
-TOOO DOO
+This is also a way to test whether a system is secure and has no hidden flow misseption. Within the two written tests, I will demostrate the system workflow.
 
+1. **Trigger reCAPTCHA**
 
+```js
+  it("Registry of a user should not be automated", () => {
+    cy.visit("https://morvie-frontend-markgoertz.vercel.app/");
+    cy.origin("http://localhost:2222/", () => {
+      cy.get("a").contains("Register").click();
+      cy.get("#firstName").type("Cypress");
+      cy.get("#lastName").type("bot");
+      cy.get("#email").type("cypress.bot@mail.com");
+      cy.get("#username").type("Im am a bot!");
+      cy.get("#password").type("Bot123!");
+      cy.get("#password-confirm").type("Bot123!");
+      cy.get("#kc-form-buttons").click();
+
+      //Checking the window alert text
+      cy.on("window:alert", (txt) => {
+        //Assertion
+        expect(txt).to.contains("Invalid Recaptcha");
+      });
+    });
+  });
+```
+
+By executing this test, it opens up an automated test execution, which will execute the test by performing the actions-order. By using this it shown it has passed:
+
+<div align = "center">
+    <img src = "..\img\Security\Cypress.io-test overview.png">
+</div>
+
+Which does look similar like this on the page itself:
+
+<div align = "center">
+    <img src = "..\img\Security\Recaptch-protection-trigger.png">
+</div>
+
+The purpose with this automated test is to check whether the application succeeds on a level of bot-detection. With the automated test which can perform on a faster speed than a human, the system can validate that this action is automated and ask for the reCAPTCHA validation.
+
+2. **Post operation application.**
+
+With the following test-script, I was able to test my POST action from the front-end all the way back to the database. And it has been done with Docker test databases.
+
+This is the script which is used:
+
+```js
+  it("Post thread in detailed page", () => {
+    cy.visit("https://morvie-frontend-markgoertz.vercel.app/movie");
+    cy.origin("http://localhost:2222/", () => {
+      cy.get("#username").type("Cypress");
+      cy.get("#password").type("Bot12345!");
+      cy.get("#kc-login").click();
+    });
+    cy.wait(2000);
+    cy.get("a").contains("Puss in Boots: The Last Wish").click();
+    cy.wait(2000);
+    cy.get("button").contains("Open form").click();
+    cy.get("#topicName").type("Automated Testing with Cypress");
+    cy.get("#content").type("This is fully automated POST test!");
+
+    cy.get("button").contains("Submit").click();
+
+    //Checking the window alert text
+    cy.on("window:alert", (txt) => {
+      //Assertion
+      expect(txt).to.contains("Thread successfully created!");
+    });
+  });
+```
+
+Note the `topicname` and `content` which are currently set on: "Automated Testing with Cypress" and "This is fully automated POST test!". With the assertion on created window alert, I can validate whether the operation succeeded or not.
+
+I can also test this further by pasting injections, input validations and more.
+
+The test result was executed and the result is:
+
+<div align = "center">
+    <img src = "..\img\Tests\Cypress-automated.png">
+    DOM Screenshot based of mid-testing.
+</div>
 
 ---
 
