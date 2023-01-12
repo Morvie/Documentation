@@ -31,7 +31,6 @@
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#Introduction"> ➤ Introduction.</a></li>
     <li><a href="#OWASP"> ➤ OWASP Top 10</a></li>
     <li><a href="#CIA"> ➤ CIA-Model</a></li>
     <li><a href="#Keycloak"> ➤ Keycloak authentication manager</a></li> 
