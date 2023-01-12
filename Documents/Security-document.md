@@ -593,11 +593,11 @@ As seen below within the keycloak configuration:
 
 <div align="center">
   <a>
-    <img src="../img/Security/keycloak-password.png"/>
+    <img src="..\img\Security\keycloak-password.png"/>
   </a>
   &nbsp;
   <a>
-    <img src="../img/Security/keycloak-2FA-trigger.png"/>
+    <img src="..\img\Security\Keycloak-2FA-trigger.png"/>
   </a>
 </div>
 
@@ -607,11 +607,11 @@ As seen below within the keycloak configuration:
 
 <div align="center">
     <a>
-    <img src="../img/Security/keycloak-2FA-registry.png"/>
+    <img src="..\img\Security\Keycloak-2FA-registry.png"/>
   </a>
   
   <a>
-    <img src="../img/Security/keycloak-2FA.png"/>
+    <img src="..\img\Security\Keycloak-2FA.png"/>
   </a>
 
 </div>
