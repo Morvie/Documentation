@@ -308,6 +308,14 @@ I host it locally since this is a development tool. It can be hosted on a server
 
 <img src = "..\img\GDPR\InfluxDB.png"/>
 
+#### Automated back-ups
+
+Within Azure SQL database, there is a possibility to created weekly backups of the database. This can be done by simply enable the setting:
+
+<img src = "..\img\Security\Morvie-database backup.png"/>
+
+
+
 
 
 <h1 id = "Law">GDPR undertaken activities.</h1>
@@ -320,10 +328,6 @@ In order to apply the GDPR laws into our system to make it GDPR-proof, the follo
 ### Counterpart of using Relational databases.
 
 When using Relational databases primarly for this application the Partion tollerance type of databases where not used. However for the future expansion I might consider using this type of databases, such as `MongoDB` and `Cassandra` which are NoSQL databases. Why? The reason behind this has to do with `scalability and application up-time.`
-
-### Regular Backups of data 
-
-Within the database of Azure SQL database, I checked a 
 
 
 <div align= "center">
