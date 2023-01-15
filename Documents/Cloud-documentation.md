@@ -545,6 +545,37 @@ The cons of using this method is that it could still overload the server if the 
 
 ---
 
+## Usage of Cloud IAM provider | Keycloak
+
+Within the latest week of the semester, I wanted to use a cloud provider for my Keycloak realm. So, the keycloak server would be hosted online. With searching for the cloud provider, I stumbled accross the cloud provider:  `Cloud IAM`. Cloud IAM is an european cloud provider for Keycloak instance. It uses PostgreSQL databases and makes sure the keycloak provider is GDPR-friendly according to the European specification for GDPR rules.
+
+I did manage to get this working with the back-end, but with the front-end I was not able to configure the cloud provider due to keycloak adapter configuration issues since it uses the newest feature-breaking update.
+
+<div align = "center">
+  <img src = "..\img\Security\CloudIAM-options.png">
+</div>
+
+&nbsp;
+
+<div align = "center">
+
+In order to prove the usage of Cloud IAM, I set some screenshots below.
+
+  <img src = "..\img\Security\CloudIAM-credentials.png">
+</div>
+
+&nbsp;
+
+<div align = "center">
+  <img src = "..\img\Security\CloudIAM-Forbidden.png">
+  <img src="..\img\Security\CloudIAM-Unauthorized.png">
+  <img src="..\img\Security\CloudIAM-Success.png">
+  <img src="..\img\Security\CloudIAM-login.png">
+
+</div>
+
+
+
 
 
 
@@ -572,3 +603,5 @@ The cons of using this method is that it could still overload the server if the 
 * Services  |  Google Kubernetes Engine (GKE)  |. (z.d.). Google Cloud. https://cloud.google.com/kubernetes-engine/docs/concepts/service*
 
 * CloudCheckr | 8 July 2021 | https://cloudcheckr.com/cloud-automation/horizontal-vertical-cloud-scaling/
+
+* https://cloud-iam.webflow.io/?pk_abe=DocEnAvant&pk_abv=DocOnTop
